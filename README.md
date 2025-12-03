@@ -349,13 +349,13 @@ These 20 locations represent immediate partnership opportunities that would sign
 
 ### Financial Projections
 
-**Investment per ATM**: $15,000 - $25,000
-- Standalone: ~$25,000
-- Retail partnership: ~$15,000
-- Weighted average: ~$18,000
+**Investment per ATM**: ₼25,000 - ₼42,000 AZN
+- Standalone: ~₼42,000 AZN
+- Retail partnership: ~₼25,000 AZN
+- Weighted average: ~₼30,000 AZN
 
 **Year 1 Investment** (100 new ATMs):
-- Total: ~$1.8M
+- Total: ~₼3.0M AZN
 - Expected monthly transactions: 15,000-25,000 per ATM
 - Revenue: Transaction fees + increased customer acquisition
 - ROI timeline: 18-24 months
