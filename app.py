@@ -59,6 +59,19 @@ def haversine_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> fl
     c = 2 * atan2(sqrt(a), sqrt(1-a))
     return R * c
 
+def haversine_vectorized(lat1, lon1, lat2_arr, lon2_arr):
+    """Vectorized haversine calculation for better performance"""
+    R = 6371
+    lat1, lon1 = np.radians(lat1), np.radians(lon1)
+    lat2_arr, lon2_arr = np.radians(lat2_arr), np.radians(lon2_arr)
+
+    dlat = lat2_arr - lat1
+    dlon = lon2_arr - lon1
+
+    a = np.sin(dlat/2)**2 + np.cos(lat1) * np.cos(lat2_arr) * np.sin(dlon/2)**2
+    c = 2 * np.arctan2(np.sqrt(a), np.sqrt(1-a))
+    return R * c
+
 def get_display_name(source: str) -> str:
     """Get display-friendly name for sources"""
     mapping = {
@@ -68,62 +81,183 @@ def get_display_name(source: str) -> str:
     }
     return mapping.get(source, source)
 
-def calculate_coverage_gaps(data: pd.DataFrame, bob_atms: pd.DataFrame, radius_km: float = 2.0):
-    """Calculate locations with no BOB ATM within specified radius"""
+@st.cache_data
+def calculate_coverage_gaps(_data: pd.DataFrame, radius_km: float = 2.0):
+    """Calculate locations with no BOB ATM within specified radius - CACHED"""
     atm_types = ['ATM', 'A', 'atm', 'network_atm']
-    competitor_atms = data[
-        (data['type'].isin(atm_types)) &
-        (data['source'] != 'Bank of Baku')
-    ].copy()
+
+    bob_atms = _data[(_data['source'] == 'Bank of Baku') & (_data['type'].isin(atm_types))]
+    competitor_atms = _data[(_data['type'].isin(atm_types)) & (_data['source'] != 'Bank of Baku')]
+
+    if len(bob_atms) == 0:
+        return pd.DataFrame()
+
+    # Convert to numpy arrays for vectorized operations
+    bob_lats = bob_atms['latitude'].values
+    bob_lons = bob_atms['longitude'].values
+    comp_lats = competitor_atms['latitude'].values
+    comp_lons = competitor_atms['longitude'].values
 
     gaps = []
-    for _, comp in competitor_atms.iterrows():
-        distances = bob_atms.apply(
-            lambda bob: haversine_distance(
-                comp['latitude'], comp['longitude'],
-                bob['latitude'], bob['longitude']
-            ), axis=1
-        )
-        min_distance = distances.min() if len(distances) > 0 else float('inf')
+
+    # Calculate for each competitor ATM
+    for idx, row in competitor_atms.iterrows():
+        # Vectorized distance calculation to all BOB ATMs
+        distances = haversine_vectorized(row['latitude'], row['longitude'], bob_lats, bob_lons)
+        min_distance = distances.min()
 
         if min_distance > radius_km:
+            # Calculate competitor density (within 1km)
+            comp_distances = haversine_vectorized(row['latitude'], row['longitude'], comp_lats, comp_lons)
+            competitor_density = np.sum(comp_distances <= 1.0)
+
             gaps.append({
-                'latitude': comp['latitude'],
-                'longitude': comp['longitude'],
-                'source': comp['source'],
-                'address': comp['address'],
+                'latitude': row['latitude'],
+                'longitude': row['longitude'],
+                'source': row['source'],
+                'address': row['address'],
                 'distance_to_bob': min_distance,
-                'competitor_density': len(competitor_atms[
-                    competitor_atms.apply(
-                        lambda x: haversine_distance(
-                            comp['latitude'], comp['longitude'],
-                            x['latitude'], x['longitude']
-                        ) <= 1.0, axis=1
-                    )
-                ])
+                'competitor_density': competitor_density
             })
 
     return pd.DataFrame(gaps)
 
-def calculate_roi_score(gap_row, retail_locations: pd.DataFrame):
-    """Calculate ROI score for a location"""
-    # Competition density (30%)
-    gap_score = min(gap_row['distance_to_bob'] / 10, 1.0) * 30
+@st.cache_data
+def calculate_retail_opportunities(_data: pd.DataFrame):
+    """Calculate retail partnership opportunities - CACHED"""
+    atm_types = ['ATM', 'A', 'atm', 'network_atm']
+    branch_types = ['Branch', 'branch', 'Store', 'store']
 
-    # Competitor density (40%)
-    demand_score = min(gap_row['competitor_density'] / 10, 1.0) * 40
+    bob_atms = _data[(_data['source'] == 'Bank of Baku') & (_data['type'].isin(atm_types))]
+    competitor_atms = _data[(_data['type'].isin(atm_types)) & (_data['source'] != 'Bank of Baku')]
+    retail_locations = _data[_data['type'].isin(branch_types)]
 
-    # Retail proximity (30%)
-    retail_distances = retail_locations.apply(
-        lambda r: haversine_distance(
-            gap_row['latitude'], gap_row['longitude'],
-            r['latitude'], r['longitude']
-        ), axis=1
-    )
-    nearest_retail = retail_distances.min() if len(retail_distances) > 0 else 10
-    retail_score = max(0, (2.0 - nearest_retail) / 2.0) * 30
+    if len(bob_atms) == 0 or len(retail_locations) == 0:
+        return pd.DataFrame()
 
-    return gap_score + demand_score + retail_score
+    bob_lats = bob_atms['latitude'].values
+    bob_lons = bob_atms['longitude'].values
+    comp_lats = competitor_atms['latitude'].values
+    comp_lons = competitor_atms['longitude'].values
+
+    retail_opps = []
+
+    for _, retail in retail_locations.iterrows():
+        # Distance to nearest BOB ATM
+        distances_to_bob = haversine_vectorized(retail['latitude'], retail['longitude'], bob_lats, bob_lons)
+        min_distance = distances_to_bob.min()
+
+        if min_distance > 1.0:  # More than 1km from BOB
+            # Count nearby competitors (within 0.5km)
+            comp_distances = haversine_vectorized(retail['latitude'], retail['longitude'], comp_lats, comp_lons)
+            competitor_count = np.sum(comp_distances <= 0.5)
+
+            retail_opps.append({
+                'source': retail['source'],
+                'address': retail['address'],
+                'latitude': retail['latitude'],
+                'longitude': retail['longitude'],
+                'distance_to_bob': min_distance,
+                'competitor_density': competitor_count,
+                'opportunity_score': (min_distance / 10) * 50 + (competitor_count / 10) * 50
+            })
+
+    return pd.DataFrame(retail_opps)
+
+@st.cache_data
+def calculate_roi_scores(gaps_df: pd.DataFrame, _data: pd.DataFrame):
+    """Calculate ROI scores for all gaps - CACHED"""
+    branch_types = ['Branch', 'branch', 'Store', 'store']
+    retail_locations = _data[_data['type'].isin(branch_types)]
+
+    if len(retail_locations) == 0 or len(gaps_df) == 0:
+        return gaps_df
+
+    retail_lats = retail_locations['latitude'].values
+    retail_lons = retail_locations['longitude'].values
+
+    roi_scores = []
+
+    for _, gap in gaps_df.iterrows():
+        # Coverage Gap (30%)
+        gap_score = min(gap['distance_to_bob'] / 10, 1.0) * 30
+
+        # Competitor density (40%)
+        demand_score = min(gap['competitor_density'] / 10, 1.0) * 40
+
+        # Retail proximity (30%)
+        retail_distances = haversine_vectorized(gap['latitude'], gap['longitude'], retail_lats, retail_lons)
+        nearest_retail = retail_distances.min() if len(retail_distances) > 0 else 10
+        retail_score = max(0, (2.0 - nearest_retail) / 2.0) * 30
+
+        roi_scores.append(gap_score + demand_score + retail_score)
+
+    result = gaps_df.copy()
+    result['roi_score'] = roi_scores
+    return result.sort_values('roi_score', ascending=False)
+
+@st.cache_data
+def calculate_co_location_matrix(_data: pd.DataFrame):
+    """Calculate co-location matrix - CACHED"""
+    atm_types = ['ATM', 'A', 'atm', 'network_atm']
+    bank_atms = _data[_data['type'].isin(atm_types)]
+
+    banks = sorted([b for b in bank_atms['source'].unique() if b != 'Bank of Baku'])
+    co_location_matrix = pd.DataFrame(index=banks, columns=banks, data=0)
+
+    for bank1 in banks:
+        bank1_atms = bank_atms[bank_atms['source'] == bank1]
+        bank1_lats = bank1_atms['latitude'].values
+        bank1_lons = bank1_atms['longitude'].values
+
+        for bank2 in banks:
+            bank2_atms = bank_atms[bank_atms['source'] == bank2]
+            bank2_lats = bank2_atms['latitude'].values
+            bank2_lons = bank2_atms['longitude'].values
+
+            count = 0
+            for lat1, lon1 in zip(bank1_lats, bank1_lons):
+                distances = haversine_vectorized(lat1, lon1, bank2_lats, bank2_lons)
+                count += np.sum(distances <= 0.5)
+
+            co_location_matrix.loc[bank1, bank2] = count
+
+    return co_location_matrix.astype(int)
+
+@st.cache_data
+def calculate_efficiency_metrics(_data: pd.DataFrame):
+    """Calculate network efficiency - CACHED"""
+    atm_types = ['ATM', 'A', 'atm', 'network_atm']
+    bank_atms = _data[_data['type'].isin(atm_types)]
+
+    efficiency_data = []
+    for bank in bank_atms['source'].unique():
+        bank_data = bank_atms[bank_atms['source'] == bank]
+        if len(bank_data) > 1:
+            lats = bank_data['latitude'].values
+            lons = bank_data['longitude'].values
+
+            # Sample for large banks to avoid timeout
+            if len(bank_data) > 100:
+                sample_size = 100
+                indices = np.random.choice(len(bank_data), sample_size, replace=False)
+                lats = lats[indices]
+                lons = lons[indices]
+
+            distances = []
+            for i in range(len(lats)):
+                dists = haversine_vectorized(lats[i], lons[i], lats[i+1:], lons[i+1:])
+                distances.extend(dists)
+
+            avg_distance = np.mean(distances) if distances else 0
+            efficiency_data.append({
+                'Bank': bank,
+                'ATM Count': len(bank_data),
+                'Avg Spacing (km)': avg_distance,
+                'Efficiency': len(bank_data) / avg_distance if avg_distance > 0 else 0
+            })
+
+    return pd.DataFrame(efficiency_data).sort_values('ATM Count', ascending=False)
 
 # Load data
 data = load_data()
@@ -214,15 +348,21 @@ if page == "📊 Overview":
 
     with col2:
         st.subheader("Geographic Distribution")
+
+        # Limit map data for performance
+        map_data = bank_atms[bank_atms['source'].isin(selected_banks)]
+        if len(map_data) > 500:
+            map_data = map_data.sample(500)
+
         fig = px.scatter_mapbox(
-            bank_atms[bank_atms['source'].isin(selected_banks)],
+            map_data,
             lat='latitude',
             lon='longitude',
             color='source',
             size_max=10,
             zoom=10,
             mapbox_style="open-street-map",
-            title='All Bank ATM Locations',
+            title='All Bank ATM Locations (Sample)',
             height=500
         )
         st.plotly_chart(fig, use_container_width=True)
@@ -231,7 +371,8 @@ if page == "📊 Overview":
     st.markdown("---")
     st.subheader(f"Coverage Gap Analysis (>{radius_km}km from BOB ATM)")
 
-    gaps_df = calculate_coverage_gaps(data, bob_atms, radius_km)
+    with st.spinner("Analyzing coverage gaps..."):
+        gaps_df = calculate_coverage_gaps(data, radius_km)
 
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -257,6 +398,9 @@ elif page == "🗺️ Interactive Map":
     with col3:
         show_retail = st.checkbox("Show Retail Locations", value=False)
 
+    # Limit data for performance
+    max_points_per_layer = 200
+
     # Create map
     fig = go.Figure()
 
@@ -275,6 +419,11 @@ elif page == "🗺️ Interactive Map":
         for bank in selected_banks:
             if bank != 'Bank of Baku':
                 bank_data = competitor_atms[competitor_atms['source'] == bank]
+
+                # Sample if too many points
+                if len(bank_data) > max_points_per_layer:
+                    bank_data = bank_data.sample(max_points_per_layer)
+
                 fig.add_trace(go.Scattermapbox(
                     lat=bank_data['latitude'],
                     lon=bank_data['longitude'],
@@ -286,13 +435,17 @@ elif page == "🗺️ Interactive Map":
                 ))
 
     if show_retail:
+        retail_sample = retail_locations
+        if len(retail_sample) > max_points_per_layer:
+            retail_sample = retail_sample.sample(max_points_per_layer)
+
         fig.add_trace(go.Scattermapbox(
-            lat=retail_locations['latitude'],
-            lon=retail_locations['longitude'],
+            lat=retail_sample['latitude'],
+            lon=retail_sample['longitude'],
             mode='markers',
             marker=dict(size=6, color='green', symbol='circle'),
             name='Retail Locations',
-            text=retail_locations.apply(
+            text=retail_sample.apply(
                 lambda x: f"{get_display_name(x['source'])}<br>{x['address']}", axis=1
             ),
             hovertemplate='%{text}<extra></extra>'
@@ -330,23 +483,24 @@ elif page == "🗺️ Interactive Map":
         st.metric("BOB ATMs Visible", len(bob_atms) if show_bob else 0)
     with col2:
         competitor_count = len(competitor_atms[competitor_atms['source'].isin(selected_banks)])
-        st.metric("Competitor ATMs Visible", competitor_count if show_competitors else 0)
+        st.metric("Competitor ATMs", competitor_count if show_competitors else 0)
     with col3:
-        st.metric("Retail Locations Visible", len(retail_locations) if show_retail else 0)
+        st.metric("Retail Locations", len(retail_locations) if show_retail else 0)
     with col4:
         total_visible = (
             (len(bob_atms) if show_bob else 0) +
             (competitor_count if show_competitors else 0) +
             (len(retail_locations) if show_retail else 0)
         )
-        st.metric("Total Locations Visible", total_visible)
+        st.metric("Total Locations", total_visible)
 
 elif page == "🎯 Coverage Gaps":
     st.markdown('<div class="main-header">Coverage Gap Analysis</div>', unsafe_allow_html=True)
     st.markdown(f"Identifying competitor locations with no BOB ATM within {radius_km}km")
     st.markdown("---")
 
-    gaps_df = calculate_coverage_gaps(data, bob_atms, radius_km)
+    with st.spinner("Analyzing coverage gaps..."):
+        gaps_df = calculate_coverage_gaps(data, radius_km)
 
     if len(gaps_df) == 0:
         st.success("No coverage gaps found! BOB has excellent market coverage.")
@@ -371,6 +525,9 @@ elif page == "🎯 Coverage Gaps":
         with col1:
             st.subheader("Coverage Gap Map")
 
+            # Sample gaps for map if too many
+            gaps_to_show = gaps_df.nlargest(min(200, len(gaps_df)), 'competitor_density')
+
             fig = go.Figure()
 
             # Add BOB ATMs
@@ -386,26 +543,26 @@ elif page == "🎯 Coverage Gaps":
 
             # Add coverage gaps
             fig.add_trace(go.Scattermapbox(
-                lat=gaps_df['latitude'],
-                lon=gaps_df['longitude'],
+                lat=gaps_to_show['latitude'],
+                lon=gaps_to_show['longitude'],
                 mode='markers',
                 marker=dict(
                     size=10,
-                    color=gaps_df['distance_to_bob'],
+                    color=gaps_to_show['distance_to_bob'],
                     colorscale='Reds',
                     showscale=True,
                     colorbar=dict(title="Distance<br>to BOB (km)")
                 ),
-                name='Coverage Gaps',
-                text=gaps_df.apply(
+                name=f'Top {len(gaps_to_show)} Gaps',
+                text=gaps_to_show.apply(
                     lambda x: f"{x['source']}<br>{x['address']}<br>Distance: {x['distance_to_bob']:.1f}km<br>Competitors nearby: {x['competitor_density']}",
                     axis=1
                 ),
                 hovertemplate='%{text}<extra></extra>'
             ))
 
-            center_lat = gaps_df['latitude'].mean()
-            center_lon = gaps_df['longitude'].mean()
+            center_lat = gaps_to_show['latitude'].mean()
+            center_lon = gaps_to_show['longitude'].mean()
 
             fig.update_layout(
                 mapbox=dict(
@@ -481,39 +638,8 @@ elif page == "🏪 Retail Opportunities":
     st.markdown("High foot-traffic retail locations for ATM placement")
     st.markdown("---")
 
-    # Calculate retail opportunities (retail locations far from BOB)
-    retail_opps = []
-    for _, retail in retail_locations.iterrows():
-        distances_to_bob = bob_atms.apply(
-            lambda bob: haversine_distance(
-                retail['latitude'], retail['longitude'],
-                bob['latitude'], bob['longitude']
-            ), axis=1
-        )
-        min_distance = distances_to_bob.min() if len(distances_to_bob) > 0 else float('inf')
-
-        # Count nearby competitors
-        competitor_count = len(competitor_atms[
-            competitor_atms.apply(
-                lambda x: haversine_distance(
-                    retail['latitude'], retail['longitude'],
-                    x['latitude'], x['longitude']
-                ) <= 0.5, axis=1
-            )
-        ])
-
-        if min_distance > 1.0:  # More than 1km from BOB
-            retail_opps.append({
-                'source': retail['source'],
-                'address': retail['address'],
-                'latitude': retail['latitude'],
-                'longitude': retail['longitude'],
-                'distance_to_bob': min_distance,
-                'competitor_density': competitor_count,
-                'opportunity_score': (min_distance / 10) * 50 + (competitor_count / 10) * 50
-            })
-
-    retail_opps_df = pd.DataFrame(retail_opps)
+    with st.spinner("Calculating retail opportunities..."):
+        retail_opps_df = calculate_retail_opportunities(data)
 
     if len(retail_opps_df) == 0:
         st.success("All retail locations are well-covered by BOB ATMs!")
@@ -703,6 +829,11 @@ elif page == "📈 Competitor Analysis":
     with col2:
         comparison_data = bank_atms[bank_atms['source'] == comparison_bank]
         st.markdown(f"**{comparison_bank}** ({len(comparison_data)} ATMs)")
+
+        # Sample if too large
+        if len(comparison_data) > 500:
+            comparison_data = comparison_data.sample(500)
+
         fig = px.density_mapbox(
             comparison_data,
             lat='latitude',
@@ -720,25 +851,10 @@ elif page == "📈 Competitor Analysis":
     st.subheader("Competitor Co-location Analysis")
     st.markdown("How many competitor ATMs are within 500m of each other?")
 
-    banks = sorted([b for b in bank_atms['source'].unique() if b != 'Bank of Baku'])
-    co_location_matrix = pd.DataFrame(index=banks, columns=banks, data=0)
+    with st.spinner("Calculating co-location matrix..."):
+        co_location_matrix = calculate_co_location_matrix(data)
 
-    for bank1 in banks:
-        bank1_atms = bank_atms[bank_atms['source'] == bank1]
-        for bank2 in banks:
-            bank2_atms = bank_atms[bank_atms['source'] == bank2]
-            count = 0
-            for _, atm1 in bank1_atms.iterrows():
-                nearby = bank2_atms.apply(
-                    lambda atm2: haversine_distance(
-                        atm1['latitude'], atm1['longitude'],
-                        atm2['latitude'], atm2['longitude']
-                    ) <= 0.5, axis=1
-                ).sum()
-                count += nearby
-            co_location_matrix.loc[bank1, bank2] = count
-
-    co_location_matrix = co_location_matrix.astype(int)
+    banks = list(co_location_matrix.index)
 
     fig = px.imshow(
         co_location_matrix,
@@ -756,28 +872,8 @@ elif page == "📈 Competitor Analysis":
     st.subheader("Market Penetration Efficiency")
     st.markdown("Average distance between ATMs (lower = denser network)")
 
-    efficiency_data = []
-    for bank in bank_atms['source'].unique():
-        bank_data = bank_atms[bank_atms['source'] == bank]
-        if len(bank_data) > 1:
-            distances = []
-            for i, atm1 in bank_data.iterrows():
-                for j, atm2 in bank_data.iterrows():
-                    if i < j:
-                        dist = haversine_distance(
-                            atm1['latitude'], atm1['longitude'],
-                            atm2['latitude'], atm2['longitude']
-                        )
-                        distances.append(dist)
-            avg_distance = np.mean(distances) if distances else 0
-            efficiency_data.append({
-                'Bank': bank,
-                'ATM Count': len(bank_data),
-                'Avg Spacing (km)': avg_distance,
-                'Efficiency': len(bank_data) / avg_distance if avg_distance > 0 else 0
-            })
-
-    efficiency_df = pd.DataFrame(efficiency_data).sort_values('ATM Count', ascending=False)
+    with st.spinner("Calculating efficiency metrics..."):
+        efficiency_df = calculate_efficiency_metrics(data)
 
     fig = px.scatter(
         efficiency_df,
@@ -798,14 +894,15 @@ else:  # ROI Rankings page
     st.markdown("---")
 
     # Calculate comprehensive ROI scores
-    gaps_df = calculate_coverage_gaps(data, bob_atms, radius_km)
+    with st.spinner("Analyzing coverage gaps and calculating ROI scores..."):
+        gaps_df = calculate_coverage_gaps(data, radius_km)
 
-    if len(gaps_df) > 0:
-        gaps_df['roi_score'] = gaps_df.apply(
-            lambda row: calculate_roi_score(row, retail_locations), axis=1
-        )
-        gaps_df = gaps_df.sort_values('roi_score', ascending=False)
+        if len(gaps_df) > 0:
+            gaps_df = calculate_roi_scores(gaps_df, data)
 
+    if len(gaps_df) == 0:
+        st.info("No expansion opportunities found with current criteria. Try adjusting the coverage radius.")
+    else:
         # Scoring explanation
         with st.expander("ℹ️ How ROI Score is Calculated"):
             st.markdown("""
@@ -911,13 +1008,14 @@ else:  # ROI Rankings page
             st.markdown("**Score Distribution**")
 
             # Create score categories
-            top_locations['Category'] = pd.cut(
-                top_locations['roi_score'],
+            top_locations_copy = top_locations.copy()
+            top_locations_copy['Category'] = pd.cut(
+                top_locations_copy['roi_score'],
                 bins=[0, 50, 70, 90, 100],
                 labels=['Low', 'Fair', 'Good', 'Excellent']
             )
 
-            category_counts = top_locations['Category'].value_counts().sort_index(ascending=False)
+            category_counts = top_locations_copy['Category'].value_counts().sort_index(ascending=False)
 
             fig = px.bar(
                 x=category_counts.values,
@@ -972,22 +1070,7 @@ else:  # ROI Rankings page
         display_table['ROI Score'] = display_table['ROI Score'].round(1)
         display_table['Distance to BOB (km)'] = display_table['Distance to BOB (km)'].round(2)
 
-        # Color code by score
-        def highlight_score(val):
-            if val >= 90:
-                return 'background-color: #d4edda'
-            elif val >= 70:
-                return 'background-color: #fff3cd'
-            elif val >= 50:
-                return 'background-color: #f8d7da'
-            return ''
-
-        styled_table = display_table.style.applymap(
-            highlight_score,
-            subset=['ROI Score']
-        )
-
-        st.dataframe(styled_table, use_container_width=True, height=600)
+        st.dataframe(display_table, use_container_width=True, height=600)
 
         # Download button
         csv = display_table.to_csv()
@@ -997,9 +1080,6 @@ else:  # ROI Rankings page
             file_name=f"bob_expansion_rankings_top_{num_locations}.csv",
             mime="text/csv"
         )
-
-    else:
-        st.info("No expansion opportunities found with current criteria. Try adjusting the coverage radius.")
 
 # Footer
 st.markdown("---")
@@ -1011,5 +1091,4 @@ st.markdown(
     <p>Analysis based on geographic clustering and competitive intelligence</p>
     </div>
     """,
-    unsafe_allow_html=True
-)
+    unsafe_allow_html=True)
