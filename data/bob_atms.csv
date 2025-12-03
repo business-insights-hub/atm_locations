@@ -1,0 +1,36 @@
+name,predefined_address,api_title,api_address,service_names,lat,lon,position_order,matched
+Baş İdarə ATM,"Atatürk pr. 40/42, Bakı",Baş İdarə ATM,"Atatürk pr. 40/42, Bakı",Bankın bütün xidmət növləri,40.410909190208585,49.84899229999999,1,True
+Azneft filialının ATM-i,"Neftçilər pr. 65, Bakı",&laquo;Azneft&raquo; filialının ATM-i,"Neftçilər pr. 65, Bakı",Bankın bütün xidmət növləri,40.35999803619458,49.83333954632871,2,True
+Bakıxanov filialının ATM-i,"Gənclər küç. 4081-ci məh., Bakı",&laquo;Bakıxanov&raquo; filialının ATM-i,"Gənclər küç. 4081-ci məh., BakıBankın bütün xidmət növləri",Bankın bütün xidmət növləri,40.369745130511156,49.83341420403811,3,True
+Əməliyyat mərkəzidə ATM,"A. Neymətulla küç. 63/65, Bakı",Əməliyyat mərkəzidə ATM,"A.Neymətulla küç.63/65, Bakı",Bankın bütün xidmət növləri,40.407895694160594,49.86785137119305,4,True
+Əhmədli filialının ATM-i,"Sarayevo küç. 23/65-ci məh., Bakı",&laquo;Əhmədli&raquo; filialının ATM-i,"Sarayevo küç. 23/65-ci məh., Bakı",Bankın bütün xidmət növləri,40.38674608037714,49.9597036405073,5,True
+Həzi Aslanov filialının ATM-i,"Məhəmməd Hadi küçəsi, 152C, Bakı",&laquo;Həzi Aslanov&raquo; filialının ATM-i,"Məhəmməd Hadi küçəsi, 152C, Bakı",Bankın bütün xidmət növləri,40.37566109811871,49.9543472469739,6,True
+Mərkəz filialının ATM-i,"Azərbaycan pr. 3, Bakı",&laquo;Mərkəz&raquo; filialının ATM-i,"Azərbaycan pr. 3, Bakı",Bankın bütün xidmət növləri,40.37076977057219,49.83404821349304,7,True
+Mərdəkan filialının ATM-i,"Xəzər r-nu, Mərdəkan qəsəbəsinin girişi, Bakı",&laquo;Mərdəkan&raquo; filialının ATM-i,"Xəzər r-nu, Mərdəkan qəsəbəsinin girişi, Bakı",Bankın bütün xidmət növləri,40.48699867022906,50.13135866070696,8,True
+Nəsimi filialındakı ATM,"A. Məhərrəmov küçəsi, 34A, Bakı",&laquo;Nəsimi&raquo; filialındakı ATM,"A. Məhərrəmov küçəsi, 34A, Bakı",Bankın bütün xidmət növləri,40.41059494544898,49.80991054419676,9,True
+Neftçilər filialının ATM-i,"Q. Qarayev, 59, Bakı",&laquo;Neft&ccedil;ilər&raquo; filialının ATM-i,"Q. Qarayev, 59, Bakı",Bankın bütün xidmət növləri,40.411274058546056,49.94340428650739,10,True
+Otoplaza filialının ATM-i,"Z. Bünyadov 118, Bakı",&laquo;Otoplaza&raquo; filialının ATM-i,"Z.Bünyadov. 118, Bakı",Bankın bütün xidmət növləri,40.41280544864948,49.84579799999999,11,True
+Səməd Vurğun filialının ATM-i,"AZ 1010, Nəsimi rayonu, Puşkin küç., 12/14, Bakı",&laquo;Səməd Vurğun&raquo; filialının ATM-i,"AZ 1010, Nəsimi rayonu, Puşkin küç., 12/14, Bakı",Bankın bütün xidmət növləri,40.37802091847258,49.85320891534262,12,True
+Yasamal filialının ATM-i,"N. Hikmət küç., 32C, Bakı",&laquo;Yasamal&raquo; filialının ATM-i,"N. Hikmət küç., 32C, Bakı",Bankın bütün xidmət növləri,40.379540125937545,49.8028897576713,13,True
+Nərimanov filialının ATM-i,"Ağa Nemətulla 76H, Nərimanov, Bakı",&laquo;Nərimanov&raquo; filialının ATM-i,"Ağa Nemətulla 76H, Nərimanov, Bakı",Bankın bütün xidmət növləri,40.3990731255622,49.87645737116434,14,True
+Xırdalan filialının ATM-i,"Xırdalan ş., H. Əliyev küç. 39, Xırdalan Mədəniyyət evi ilə üzbəüz",&laquo;Xırdalan&raquo; filialının ATM-i,"Xırdalan ş. H.Əliyev küç, 39. Xirdalan Mədəniyyət evi ilə üzbəüz.",Bankın bütün xidmət növləri,40.45029159217125,49.746498915342606,15,True
+Gəncə filialının ATM-i,"Cavadxan 38, Gəncə",&laquo;Gəncə&raquo; filialının ATM-i,"Cavadxan, 38, Gəncə",Bankın bütün xidmət növləri,40.69840722606487,46.33220588284303,16,True
+Yeni Gəncə filialının ATM-i,"Kəpəz rayonu, N. Nərimanov pr-ti, 42C, Gəncə",&laquo;Gəncə&raquo; filialının ATM-i,"Cavadxan, 38, Gəncə",Bankın bütün xidmət növləri,40.69840722606487,46.33220588284303,16,True
+Lənkəran filialının ATM-i,"H. Aslanov 1, Lənkəran",&laquo;Lənkəran&raquo; filialının ATM-i,"H. Aslanov, 1, Lənkəran",Bankın bütün xidmət növləri,38.75586567767877,48.852873140473605,18,True
+Sumqayıt filialının ATM-i,"Sumqayıt ş., Z. Hacıyev küç. 183",&laquo;Sumqayıt&raquo; filialının ATM-i,"Sumqayıt ş. Z.Hacıyev küç, 183",,40.579146569610124,49.683207393762885,19,True
+Şəki filialının ATM-i,"Məmməd Əmin Rəsulzadə 149B, Şəki",&laquo;Şəki&raquo; filialının ATM-i,"Məmməd Əmin Rəsulzadə, 149B, Şəki",Bankın bütün xidmət növləri,41.19678319475522,47.175516098196105,20,True
+Şirvan filialının ATM-i,"M. Rəsulzadə küç. 33, Şirvan",&laquo;Şirvan&raquo; filialının ATM-i,"M. Rəsulzadə küç, 33, Şirvan",,39.960497447249516,48.94709626351242,21,True
+Xaçmaz filialının ATM-i,"H. Əliyev küç. 30, Xaçmaz",&laquo;Xa&ccedil;maz&raquo; filialının ATM-i,"H.Əliyev küç, 30, Xaçmaz",Bankın bütün xidmət növləri,41.46600150858026,48.8044658963522,22,True
+Park Bulvar ATM,"Ticarət mərkəzi, Neftçilər pr., Dənizkənarı Milli Park, Bakı",&laquo;Park Bulvar&raquo;-da ATM,"Ticarət mərkəzi. Neftçilər pr, Dənizkənarı Milli Park, Bakı",Bankın bütün xidmət növləri,40.37092831443522,49.849720843414254,23,True
+28 Mall ATM,"""28 mall"" ticarət mərkəzi, Azadlıq 27, Nəsimi, Bakı",28 Mall T/M,"""28 mall"" ticarət mərkəzi Azadlıq 27 Nəsimi, Bakı",Bankın bütün xidmət növləri,40.379225726479724,49.84680850108695,24,True
+Favorit Market ATM,"Mir Cəlal 59, Binəqədi, Bakı",Favorit Market (Mir Cəlal 59),"Mir Cəlal 59 Binəqədı, Bakı",Bankın bütün xidmət növləri,40.41912466906334,49.811089284686346,25,True
+Baku Electronics ATM (Ə.Naxçıvani),"Əcəmi Naxçıvani 3066, Binəqədi, Bakı",Baku Electronics-də ATM Ə.Nax&ccedil;ıvani,"Əcəmi Naxçıvani, 3066, Binəqədi, Bakı",Bankın bütün xidmət növləri,40.41752565529939,49.84580418283691,26,True
+Improtex Travel ATM,"Nizami 63, Nəsimi, Bakı",Improtex travel,"Nizami 63, Nəsimi, Bakı",Bankın bütün xidmət növləri,40.371677404441215,49.83581274050724,27,True
+Demirchi Tower ATM,"Xocalı pr-ti 37, Xətai, Bakı",Demirchi Tower (ATM),"Xocalı pr-ti 37, Xətai, Bakı",Bankın bütün xidmət növləri,40.383605800175765,49.87545405585001,28,True
+Memarlıq Universiteti ATM,"Ayna Sultanova 11, Yasamal, Bakı",Memarliq Universitet,"Ayna Sultanova 11, Yasamal, Bakı",Bankın bütün xidmət növləri,40.36914623701144,49.815771069342794,29,True
+Nizami Mall ATM,"Şıxəli Qurbanov, Yasamal, Bakı",Nizami Mall,"Şıxəli Qurbanov, Yasamal, Bakı",Bankın bütün xidmət növləri,40.458869181685024,49.7512392116734,30,True
+Qəbələ Futbol Akademiyası ATM,"Qəbələ rayonu, 28 May küç.",Qəbələ Futbol Akademiyası,"Qəbələ rayonu, 28 May küç",Bankın bütün xidmət növləri,40.986377005457776,47.83587768141206,31,True
+EmbaFinans ATM,"Akim Abbasov 73E, Yasamal, Bakı",EmbaFinans,"Akim Abbasov 73E, Yasamal, Bakı",Bankın bütün xidmət növləri,40.38595619418701,49.810895955850114,32,True
+İnşaatçılar Filialı ATM,"Abbas Mirzə Şərifzadə küçəsi, 560B",Inşaat&ccedil;ılar Filialı,"Abbas Mirzə Şərifzadə küçəsi, 560B",Bankın bütün xidmət növləri,40.39837804508885,49.80161828468605,33,True
+Baku Tobacco ATM,"1-ci Köndələn 21, Nizami, Bakı",Baku Tobacco,"1-ci Köndələn 21, Nizami, Bakı",Bankın bütün xidmət növləri,40.42449386102255,50.03846561167262,34,True
+Metro Park TM ATM,"Təbriz küç. 44, Bakı",Metro Park TM-ATM,"Təbriz küç.,44, Bakı",Bankın bütün xidmət növləri,40.40381958842655,49.87268403680862,35,True
