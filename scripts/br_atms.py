@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Bank Respublika ATM and Branch Location Scraper
+Bank Respublika ATM Location Scraper
 
-This script scrapes ATM and branch location data from Bank Respublika's website
+This script scrapes ATM location data from Bank Respublika's website
 and saves it to a CSV file.
 """
 
@@ -175,9 +175,9 @@ def save_to_csv(locations: List[Dict], filename: str) -> None:
 
 def main():
     """Main function to orchestrate the scraping process."""
-    print("Starting Bank Respublika ATM and Branch scraper...")
+    print("Starting Bank Respublika ATM scraper...")
 
-    # Bank Respublika branches and ATMs page
+    # Bank Respublika ATMs page
     url = "https://www.bankrespublika.az/en/atms"
 
     try:
