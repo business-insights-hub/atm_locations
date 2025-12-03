@@ -1,0 +1,75 @@
+
+STRATEGIC ATM PLACEMENT INSIGHTS FOR BANK OF BAKU
+================================================
+
+CURRENT MARKET POSITION
+-----------------------
+• Total BOB ATMs: 35
+• Total Market ATMs: 2500
+• BOB Market Share: 1.4%
+• Top Competitor: Kapital Bank with 1130 ATMs
+• Gap to Leader: 1095 ATMs
+
+COMPETITIVE LANDSCAPE
+---------------------
+Top 5 Competitors by ATM Count:
+  1. Kapital Bank: 1130 ATMs
+  2. ABB Bank: 971 ATMs
+  3. Xalq Bank: 133 ATMs
+  4. Bank Respublika: 109 ATMs
+  5. Rabita Bank: 74 ATMs
+
+COVERAGE GAP ANALYSIS
+---------------------
+• Identified 1549 high-priority coverage gaps
+• These are areas with competitor ATMs but no BOB presence within 2km
+• Recommendation: Prioritize these areas for immediate expansion
+
+RETAIL PARTNERSHIP OPPORTUNITIES
+---------------------------------
+• Total retail locations analyzed: 1875
+  - OBA Bank branches: 1640
+  - Bazarstore locations: 97
+  - Bravo Supermarkets: 138
+
+TOP STRATEGIC RECOMMENDATIONS
+------------------------------
+1. IMMEDIATE PRIORITY: Fill coverage gaps
+   - 1549 locations identified where competitors operate but BOB doesn't
+   - Focus on areas >2km from current BOB ATMs
+
+2. RETAIL PARTNERSHIPS: High foot-traffic locations
+   - Partner with major retail chains (Bazarstore, Bravo, OBA branches)
+   - Top 20 retail opportunities identified with no nearby BOB presence
+
+3. GEOGRAPHIC EXPANSION: Balance regional presence
+   - Analyze regional market share charts to identify underserved quadrants
+   - Consider both urban density and regional coverage
+
+4. COMPETITIVE STRATEGY:
+   - Current deficit vs leader: 1095 ATMs
+   - Recommended target: Add 50-100 ATMs in strategic locations
+   - Focus on high-density areas and retail partnerships
+
+5. DATA-DRIVEN PLACEMENT:
+   - Use heatmaps to avoid over-saturation
+   - Prioritize areas with competitor presence (proven demand)
+   - Balance between competing with leaders and serving underserved areas
+
+NEXT STEPS
+----------
+1. Review all generated charts in /charts folder
+2. Cross-reference coverage gaps with retail opportunities
+3. Conduct on-ground feasibility studies for top 20 retail locations
+4. Develop partnership agreements with high-traffic retail chains
+5. Create phased rollout plan (Phase 1: 20 ATMs, Phase 2: 30 ATMs, etc.)
+
+METHODOLOGY
+-----------
+Analysis based on 4377 total locations including:
+- 2500 bank ATMs from 7 banks
+- 1875 retail/branch locations
+- Geographic clustering and distance calculations using Haversine formula
+- 2km radius used as standard ATM service area
+
+Generated: 2025-12-03 23:04:17
