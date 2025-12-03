@@ -682,9 +682,9 @@ def chart8_competitor_proximity_analysis(data: List[Dict]) -> None:
         ax1.text(width + 0.5, bar.get_y() + bar.get_height()/2,
                 f'{dist:.1f} km', ha='left', va='center', fontweight='bold', fontsize=10)
 
-    ax1.set_xlabel('Average Distance to Nearest BOB ATM (km)', fontsize=11, fontweight='bold')
-    ax1.set_title('How Close Are Competitors to BOB?\nAverage Distance per Bank', fontsize=12, fontweight='bold')
-    ax1.grid(axis='x', alpha=0.3)
+    ax1.set_xlabel('Avg Distance to BOB (km)', fontsize=12, fontweight='bold')
+    ax1.set_title('Competitor Proximity to BOB', fontsize=13, fontweight='bold')
+    ax1.grid(axis='x', alpha=0.2, linestyle='--')
 
     # Right: Number of competitor ATMs within 1km of BOB
     close_counts = {}
@@ -714,9 +714,9 @@ def chart8_competitor_proximity_analysis(data: List[Dict]) -> None:
         ax2.text(width + 1, bar.get_y() + bar.get_height()/2,
                 f'{count}', ha='left', va='center', fontweight='bold', fontsize=10)
 
-    ax2.set_xlabel('Number of ATMs Within 1km of BOB', fontsize=11, fontweight='bold')
-    ax2.set_title('Direct Competition Intensity\nCompetitor ATMs Within 1km of BOB', fontsize=12, fontweight='bold')
-    ax2.grid(axis='x', alpha=0.3)
+    ax2.set_xlabel('ATMs Within 1km of BOB', fontsize=12, fontweight='bold')
+    ax2.set_title('Direct Competition Count', fontsize=13, fontweight='bold')
+    ax2.grid(axis='x', alpha=0.2, linestyle='--')
 
     plt.tight_layout()
     plt.savefig('charts/8_competitor_proximity_analysis.png', dpi=300, bbox_inches='tight')
@@ -771,36 +771,33 @@ def chart9_location_priority_matrix(data: List[Dict]) -> None:
     bob_dists = [loc['bob_distance'] for loc in scored_locations]
     comp_dens = [loc['competitor_density'] for loc in scored_locations]
 
-    scatter = ax.scatter(bob_dists, comp_dens, c=bob_dists, s=100, alpha=0.6,
-                        cmap='RdYlGn', edgecolors='black', linewidths=0.5)
+    scatter = ax.scatter(bob_dists, comp_dens, c=bob_dists, s=80, alpha=0.5,
+                        cmap='RdYlGn', edgecolors='black', linewidths=0.3)
 
-    plt.colorbar(scatter, ax=ax, label='Distance from BOB (km)')
+    cbar = plt.colorbar(scatter, ax=ax, label='Distance (km)')
+    cbar.ax.tick_params(labelsize=10)
 
-    # Add quadrant labels
-    ax.axhline(y=10, color='gray', linestyle='--', alpha=0.5)
-    ax.axvline(x=5, color='gray', linestyle='--', alpha=0.5)
+    # Add quadrant lines
+    ax.axhline(y=10, color='gray', linestyle='--', alpha=0.3, linewidth=2)
+    ax.axvline(x=5, color='gray', linestyle='--', alpha=0.3, linewidth=2)
 
-    ax.text(8, 18, 'HIGH PRIORITY\nHigh Demand\nNo BOB Coverage',
-            fontsize=11, fontweight='bold', ha='center',
-            bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.8))
+    # Simplified quadrant labels
+    ax.text(8, 18, 'HIGH\nPRIORITY', fontsize=10, fontweight='bold', ha='center',
+            bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.7, pad=0.5))
 
-    ax.text(2, 18, 'COMPETITIVE\nHigh Demand\nBOB Present',
-            fontsize=11, fontweight='bold', ha='center',
-            bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.8))
+    ax.text(2, 18, 'COMPETITIVE', fontsize=10, fontweight='bold', ha='center',
+            bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.7, pad=0.5))
 
-    ax.text(8, 2, 'LOW PRIORITY\nLow Demand\nNo BOB Coverage',
-            fontsize=11, fontweight='bold', ha='center',
-            bbox=dict(boxstyle='round', facecolor='lightcoral', alpha=0.8))
+    ax.text(8, 2, 'LOW\nPRIORITY', fontsize=10, fontweight='bold', ha='center',
+            bbox=dict(boxstyle='round', facecolor='lightcoral', alpha=0.7, pad=0.5))
 
-    ax.text(2, 2, 'SATURATED\nLow Demand\nBOB Present',
-            fontsize=11, fontweight='bold', ha='center',
-            bbox=dict(boxstyle='round', facecolor='lightgray', alpha=0.8))
+    ax.text(2, 2, 'SATURATED', fontsize=10, fontweight='bold', ha='center',
+            bbox=dict(boxstyle='round', facecolor='lightgray', alpha=0.7, pad=0.5))
 
-    ax.set_xlabel('Distance to Nearest BOB ATM (km)', fontsize=12, fontweight='bold')
-    ax.set_ylabel('Number of Nearby Competitors (within 1km)', fontsize=12, fontweight='bold')
-    ax.set_title('Strategic Location Priority Matrix\nHigh Demand + No BOB = Best Opportunities',
-                fontsize=14, fontweight='bold', pad=20)
-    ax.grid(True, alpha=0.3)
+    ax.set_xlabel('Distance to BOB (km)', fontsize=13, fontweight='bold')
+    ax.set_ylabel('Competitor Density (within 1km)', fontsize=13, fontweight='bold')
+    ax.set_title('Location Priority Matrix', fontsize=15, fontweight='bold', pad=15)
+    ax.grid(True, alpha=0.2, linestyle=':')
 
     plt.tight_layout()
     plt.savefig('charts/9_location_priority_matrix.png', dpi=300, bbox_inches='tight')
@@ -862,25 +859,14 @@ def chart10_market_penetration_efficiency(data: List[Dict]) -> None:
 
     # Add bank labels
     for bank, count, spacing in zip(banks, counts, spacings):
-        label = 'BOB' if bank == 'Bank of Baku' else bank.replace('Bank', '').strip()[:10]
+        label = 'BOB' if bank == 'Bank of Baku' else bank.replace('Bank', '').replace('Respublika', 'Resp').strip()[:8]
         ax.annotate(label, (count, spacing), fontsize=9, fontweight='bold',
                    ha='center', va='center')
 
-    ax.set_xlabel('Number of ATMs', fontsize=12, fontweight='bold')
-    ax.set_ylabel('Average Spacing Between ATMs (km)', fontsize=12, fontweight='bold')
-    ax.set_title('Market Penetration Efficiency Analysis\nBubble Size = Coverage Score (ATMs per km²)',
-                fontsize=14, fontweight='bold', pad=20)
-    ax.grid(True, alpha=0.3)
-
-    # Add insight box
-    bob_spacing = bank_metrics.get('Bank of Baku', {}).get('avg_spacing', 0)
-    best_spacing = min(spacings)
-    insight = f"BOB Spacing: {bob_spacing:.1f} km\nBest in Market: {best_spacing:.1f} km\n"
-    insight += "Lower spacing = Better coverage density"
-
-    ax.text(0.02, 0.98, insight, transform=ax.transAxes,
-            bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.9),
-            verticalalignment='top', fontsize=10, fontweight='bold')
+    ax.set_xlabel('Total ATMs', fontsize=13, fontweight='bold')
+    ax.set_ylabel('Avg Spacing (km)', fontsize=13, fontweight='bold')
+    ax.set_title('Market Penetration Efficiency', fontsize=15, fontweight='bold', pad=15)
+    ax.grid(True, alpha=0.2, linestyle=':')
 
     plt.tight_layout()
     plt.savefig('charts/10_market_penetration_efficiency.png', dpi=300, bbox_inches='tight')
@@ -934,22 +920,23 @@ def chart11_competitor_coexistence_analysis(data: List[Dict]) -> None:
 
     im = ax.imshow(coexistence_matrix, cmap='YlOrRd', aspect='auto')
 
-    # Set ticks and labels
+    # Set ticks and labels - shortened names
+    bank_labels = [b.replace('Bank', '').replace('Respublika', 'Resp').strip()[:12] for b in banks]
     ax.set_xticks(np.arange(len(banks)))
     ax.set_yticks(np.arange(len(banks)))
-    ax.set_xticklabels([b.replace('Bank', '').strip()[:15] for b in banks], rotation=45, ha='right')
-    ax.set_yticklabels([b.replace('Bank', '').strip()[:15] for b in banks])
+    ax.set_xticklabels(bank_labels, rotation=45, ha='right', fontsize=10)
+    ax.set_yticklabels(bank_labels, fontsize=10)
 
-    # Add values
+    # Add values only if significant
     for i in range(len(banks)):
         for j in range(len(banks)):
-            if i != j:
-                text = ax.text(j, i, int(coexistence_matrix[i, j]),
-                             ha="center", va="center", color="black", fontsize=9)
+            if i != j and coexistence_matrix[i, j] > 5:
+                ax.text(j, i, int(coexistence_matrix[i, j]),
+                       ha="center", va="center", color="white", fontsize=9, fontweight='bold')
 
-    plt.colorbar(im, ax=ax, label='Number of Co-located ATMs')
-    ax.set_title(f'Competitor Co-existence Analysis\nATMs Within {threshold}km of Each Other',
-                fontsize=14, fontweight='bold', pad=20)
+    cbar = plt.colorbar(im, ax=ax, label='Co-locations')
+    cbar.ax.tick_params(labelsize=10)
+    ax.set_title(f'Competitor Co-location Matrix ({threshold}km)', fontsize=15, fontweight='bold', pad=15)
 
     plt.tight_layout()
     plt.savefig('charts/11_competitor_coexistence_analysis.png', dpi=300, bbox_inches='tight')
@@ -1035,19 +1022,18 @@ def chart12_expansion_roi_ranking(data: List[Dict]) -> None:
         ax.text(width + 1, bar.get_y() + bar.get_height()/2,
                f'{score:.0f}', ha='left', va='center', fontweight='bold', fontsize=8)
 
-    ax.set_xlabel('ROI Score (0-100)', fontsize=12, fontweight='bold')
-    ax.set_title('Top 30 Expansion Locations by ROI Score\nScoring: Gap (30%) + Demand (40%) + Retail (30%)',
-                fontsize=14, fontweight='bold', pad=20)
-    ax.grid(axis='x', alpha=0.3)
+    ax.set_xlabel('ROI Score', fontsize=13, fontweight='bold')
+    ax.set_title('Top 30 Expansion Locations (ROI Ranked)', fontsize=15, fontweight='bold', pad=15)
+    ax.grid(axis='x', alpha=0.2, linestyle='--')
 
     # Legend
     from matplotlib.patches import Patch
     legend_elements = [
-        Patch(facecolor='#2ECC71', label='Excellent (70-100)'),
+        Patch(facecolor='#2ECC71', label='Excellent (70+)'),
         Patch(facecolor='#F39C12', label='Good (50-69)'),
         Patch(facecolor='#E74C3C', label='Fair (<50)')
     ]
-    ax.legend(handles=legend_elements, loc='lower right')
+    ax.legend(handles=legend_elements, loc='lower right', fontsize=10, framealpha=0.95, edgecolor='black')
 
     plt.tight_layout()
     plt.savefig('charts/12_expansion_roi_ranking.png', dpi=300, bbox_inches='tight')

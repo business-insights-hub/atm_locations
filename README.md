@@ -187,6 +187,139 @@ These 20 locations represent immediate partnership opportunities that would sign
 
 ---
 
+## 8. Competitor Proximity Analysis
+
+### Understanding Direct Competition
+
+![Competitor Proximity Analysis](charts/8_competitor_proximity_analysis.png)
+
+This dual-panel analysis reveals BOB's competitive positioning:
+
+**Left Panel - Average Distance to BOB:**
+Shows how far each competitor's ATMs are from the nearest BOB location on average. Higher distances indicate markets where BOB has no presence.
+
+**Right Panel - Direct Competition Count:**
+Shows how many competitor ATMs are within 1km of BOB locations, indicating direct head-to-head competition intensity.
+
+**Key Insights:**
+- Identifies which competitors BOB directly competes with
+- Reveals which banks have extensive coverage in areas BOB doesn't serve
+- Shows competitive intensity around existing BOB locations
+- Helps prioritize whether to strengthen existing locations or expand to new areas
+
+---
+
+## 9. Strategic Location Priority Matrix
+
+### Data-Driven Prioritization Framework
+
+![Location Priority Matrix](charts/9_location_priority_matrix.png)
+
+This scatter plot uses a 4-quadrant framework to prioritize expansion locations:
+
+**Axes:**
+- **X-Axis**: Distance from nearest BOB ATM (coverage gap)
+- **Y-Axis**: Number of nearby competitors (proven demand)
+
+**Quadrants:**
+1. **HIGH PRIORITY** (Top-Right): Far from BOB + High competitor density = Best opportunities
+2. **COMPETITIVE** (Top-Left): Near BOB + High density = Strengthen existing presence
+3. **LOW PRIORITY** (Bottom-Right): Far from BOB + Low density = Unproven markets
+4. **SATURATED** (Bottom-Left): Near BOB + Low density = Already covered
+
+**Strategic Value:**
+- Mathematically ranks 500+ locations by expansion potential
+- Green zones = highest ROI opportunities
+- Avoids low-demand areas that may not justify ATM deployment costs
+- Balances market coverage with proven customer demand
+
+---
+
+## 10. Market Penetration Efficiency
+
+### Coverage Density Comparison
+
+![Market Penetration Efficiency](charts/10_market_penetration_efficiency.png)
+
+This bubble chart analyzes how efficiently each bank covers the market:
+
+**Metrics:**
+- **X-Axis**: Total number of ATMs (volume)
+- **Y-Axis**: Average spacing between ATMs (density)
+- **Bubble Size**: Coverage efficiency score (ATMs per km²)
+
+**Key Findings:**
+- **Lower Y-values** = Better coverage density (ATMs closer together)
+- **Larger bubbles** = More efficient market penetration
+- Shows if BOB's ATMs are too spread out or optimally clustered
+- Reveals competitors' deployment strategies
+
+**BOB's Position:**
+With only 35 ATMs, BOB likely has high spacing (spread thin), while leaders like Kapital Bank and ABB Bank have achieved dense, efficient coverage in key markets.
+
+**Actionable Insight:**
+Focus on clustering new ATMs in high-value areas rather than spreading thinly across the country. Build density in 3-5 key cities before expanding regionally.
+
+---
+
+## 11. Competitor Co-location Matrix
+
+### Market Validation Through Competitor Behavior
+
+![Competitor Co-location Analysis](charts/11_competitor_coexistence_analysis.png)
+
+This heatmap reveals which competitors tend to co-locate (within 500m), indicating validated high-demand areas:
+
+**How to Read:**
+- Numbers show how many times each pair of banks co-locate
+- **Hot spots** (darker red, higher numbers) = multiple banks see opportunity
+- When 3+ banks cluster, demand is strongly validated
+
+**Strategic Application:**
+- **Follow the leaders**: Where Kapital Bank + ABB Bank + others cluster = proven market
+- Reduces risk by targeting already-validated locations
+- Identifies "banking districts" with high transaction volume
+- Shows competitive dynamics (who competes with whom)
+
+**BOB Strategy:**
+Target locations where 3+ competitors co-exist. These areas have:
+- Proven customer demand
+- High transaction volumes
+- Established banking behavior
+- Lower market education needed
+
+---
+
+## 12. Top 30 Expansion Locations (ROI Ranked)
+
+### Weighted Scoring Model for Deployment Priority
+
+![ROI Ranking](charts/12_expansion_roi_ranking.png)
+
+This chart provides an **actionable ranked list** using a weighted scoring system:
+
+**Scoring Formula (0-100):**
+- **30% Weight**: Coverage Gap (distance from BOB)
+- **40% Weight**: Proven Demand (competitor density within 1km)
+- **30% Weight**: Retail Proximity (foot traffic potential)
+
+**Color Coding:**
+- 🟢 **Green (70-100)**: Excellent opportunities - deploy immediately
+- 🟠 **Orange (50-69)**: Good opportunities - Phase 2 targets
+- 🔴 **Red (<50)**: Fair opportunities - lower priority
+
+**How This Differs from Chart 7:**
+- Chart 7: Simple distance ranking (retail focus)
+- Chart 12: **Multi-factor ROI score** combining gap + demand + retail
+
+**Immediate Action:**
+The top 10-15 locations on this chart should be BOB's Phase 1 deployment targets. These locations offer the optimal combination of:
+- Unserved by BOB (won't cannibalize existing ATMs)
+- Served by competitors (proven customer demand)
+- Near retail partners (deployment cost efficiency)
+
+---
+
 ## Strategic Recommendations
 
 ### 1. 🎯 IMMEDIATE PRIORITY: Fill Coverage Gaps
@@ -479,10 +612,25 @@ Bank of Baku can realistically achieve **100+ ATM deployments in Year 1**, growi
 
 ### Files & Resources
 
-- **Charts**: All visualizations stored in `/charts` folder
+- **Charts**: 12 strategic visualizations in `/charts` folder
 - **Data**: Source data in `/data` folder (10 CSV files)
 - **Scripts**: Analysis scripts in `/scripts` folder
 - **Detailed Report**: `charts/INSIGHTS_REPORT.txt`
+
+### Complete Chart List
+
+1. **Bank ATM Coverage Comparison** - Market share overview
+2. **Geographic Distribution Map** - BOB vs competitor locations
+3. **Competitor Density Heatmap** - High-demand area identification
+4. **Supermarket Partnership Opportunities** - Retail partnership locations
+5. **Coverage Gap Analysis** - Priority expansion areas (>2km from BOB)
+6. **Regional Market Share** - Quadrant-based geographic analysis
+7. **Top 20 Retail Opportunities** - Specific partnership targets
+8. **Competitor Proximity Analysis** - Direct competition measurement
+9. **Location Priority Matrix** - 4-quadrant prioritization framework
+10. **Market Penetration Efficiency** - Coverage density comparison
+11. **Competitor Co-location Matrix** - Market validation heatmap
+12. **Top 30 ROI-Ranked Locations** - Weighted scoring for deployment
 
 ### Contact & Questions
 
