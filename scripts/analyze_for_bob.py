@@ -623,6 +623,434 @@ Generated: {__import__('datetime').datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
     return report
 
 
+def chart8_competitor_proximity_analysis(data: List[Dict]) -> None:
+    """
+    Chart 8: Competitor Proximity Analysis
+    Shows how close BOB ATMs are to each competitor brand.
+    """
+    atm_types = ['ATM', 'A', 'atm', 'network_atm']
+
+    bob_atms = [(safe_float(loc['latitude']), safe_float(loc['longitude']))
+                for loc in data if loc['source'] == 'Bank of Baku'
+                and is_valid_coords(loc.get('latitude', ''), loc.get('longitude', ''))]
+
+    competitor_atms = [loc for loc in data if loc['source'] != 'Bank of Baku'
+                       and loc['type'] in atm_types
+                       and is_valid_coords(loc.get('latitude', ''), loc.get('longitude', ''))]
+
+    if not bob_atms:
+        return
+
+    # Calculate average distance from BOB to each competitor
+    competitor_distances = {}
+
+    for comp_source in set(loc['source'] for loc in competitor_atms):
+        comp_locs = [loc for loc in competitor_atms if loc['source'] == comp_source]
+        distances = []
+
+        for comp in comp_locs:
+            comp_lat = safe_float(comp['latitude'])
+            comp_lon = safe_float(comp['longitude'])
+
+            min_dist = min(haversine_distance(comp_lat, comp_lon, bob_lat, bob_lon)
+                          for bob_lat, bob_lon in bob_atms)
+            distances.append(min_dist)
+
+        competitor_distances[comp_source] = {
+            'avg_distance': np.mean(distances),
+            'min_distance': np.min(distances),
+            'count': len(distances)
+        }
+
+    # Sort by average distance
+    sorted_comps = sorted(competitor_distances.items(), key=lambda x: x[1]['avg_distance'])
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 8))
+
+    # Left: Average distance to nearest BOB ATM
+    names1 = [c[0] for c in sorted_comps]
+    avg_dists = [c[1]['avg_distance'] for c in sorted_comps]
+
+    bars1 = ax1.barh(names1, avg_dists, color='#FF6B6B', edgecolor='black', linewidth=1.2)
+
+    for bar, dist in zip(bars1, avg_dists):
+        width = bar.get_width()
+        ax1.text(width + 0.5, bar.get_y() + bar.get_height()/2,
+                f'{dist:.1f} km', ha='left', va='center', fontweight='bold', fontsize=10)
+
+    ax1.set_xlabel('Average Distance to Nearest BOB ATM (km)', fontsize=11, fontweight='bold')
+    ax1.set_title('How Close Are Competitors to BOB?\nAverage Distance per Bank', fontsize=12, fontweight='bold')
+    ax1.grid(axis='x', alpha=0.3)
+
+    # Right: Number of competitor ATMs within 1km of BOB
+    close_counts = {}
+    for comp_source in set(loc['source'] for loc in competitor_atms):
+        comp_locs = [loc for loc in competitor_atms if loc['source'] == comp_source]
+        close_count = 0
+
+        for comp in comp_locs:
+            comp_lat = safe_float(comp['latitude'])
+            comp_lon = safe_float(comp['longitude'])
+
+            min_dist = min(haversine_distance(comp_lat, comp_lon, bob_lat, bob_lon)
+                          for bob_lat, bob_lon in bob_atms)
+            if min_dist <= 1.0:
+                close_count += 1
+
+        close_counts[comp_source] = close_count
+
+    sorted_close = sorted(close_counts.items(), key=lambda x: x[1], reverse=True)
+    names2 = [c[0] for c in sorted_close]
+    counts2 = [c[1] for c in sorted_close]
+
+    bars2 = ax2.barh(names2, counts2, color='#4ECDC4', edgecolor='black', linewidth=1.2)
+
+    for bar, count in zip(bars2, counts2):
+        width = bar.get_width()
+        ax2.text(width + 1, bar.get_y() + bar.get_height()/2,
+                f'{count}', ha='left', va='center', fontweight='bold', fontsize=10)
+
+    ax2.set_xlabel('Number of ATMs Within 1km of BOB', fontsize=11, fontweight='bold')
+    ax2.set_title('Direct Competition Intensity\nCompetitor ATMs Within 1km of BOB', fontsize=12, fontweight='bold')
+    ax2.grid(axis='x', alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('charts/8_competitor_proximity_analysis.png', dpi=300, bbox_inches='tight')
+    print("✓ Created: charts/8_competitor_proximity_analysis.png")
+    plt.close()
+
+
+def chart9_location_priority_matrix(data: List[Dict]) -> None:
+    """
+    Chart 9: Strategic Location Priority Matrix
+    Scores locations based on competitor density vs BOB coverage gap.
+    """
+    atm_types = ['ATM', 'A', 'atm', 'network_atm']
+
+    bob_atms = [(safe_float(loc['latitude']), safe_float(loc['longitude']))
+                for loc in data if loc['source'] == 'Bank of Baku'
+                and is_valid_coords(loc.get('latitude', ''), loc.get('longitude', ''))]
+
+    competitor_atms = [loc for loc in data if loc['source'] != 'Bank of Baku'
+                       and loc['type'] in atm_types
+                       and is_valid_coords(loc.get('latitude', ''), loc.get('longitude', ''))]
+
+    # Calculate scores for each competitor location
+    scored_locations = []
+
+    for comp in competitor_atms[:500]:  # Sample for performance
+        comp_lat = safe_float(comp['latitude'])
+        comp_lon = safe_float(comp['longitude'])
+
+        # Score 1: Distance to nearest BOB (higher = better opportunity)
+        if bob_atms:
+            bob_distance = min(haversine_distance(comp_lat, comp_lon, bob_lat, bob_lon)
+                              for bob_lat, bob_lon in bob_atms)
+        else:
+            bob_distance = 10.0
+
+        # Score 2: Nearby competitor count (higher = proven demand)
+        nearby_competitors = sum(1 for other in competitor_atms
+                                if other != comp
+                                and haversine_distance(comp_lat, comp_lon,
+                                                      safe_float(other['latitude']),
+                                                      safe_float(other['longitude'])) <= 1.0)
+
+        scored_locations.append({
+            'bob_distance': min(bob_distance, 10),
+            'competitor_density': min(nearby_competitors, 20),
+            'source': comp['source']
+        })
+
+    fig, ax = plt.subplots(figsize=(14, 10))
+
+    bob_dists = [loc['bob_distance'] for loc in scored_locations]
+    comp_dens = [loc['competitor_density'] for loc in scored_locations]
+
+    scatter = ax.scatter(bob_dists, comp_dens, c=bob_dists, s=100, alpha=0.6,
+                        cmap='RdYlGn', edgecolors='black', linewidths=0.5)
+
+    plt.colorbar(scatter, ax=ax, label='Distance from BOB (km)')
+
+    # Add quadrant labels
+    ax.axhline(y=10, color='gray', linestyle='--', alpha=0.5)
+    ax.axvline(x=5, color='gray', linestyle='--', alpha=0.5)
+
+    ax.text(8, 18, 'HIGH PRIORITY\nHigh Demand\nNo BOB Coverage',
+            fontsize=11, fontweight='bold', ha='center',
+            bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.8))
+
+    ax.text(2, 18, 'COMPETITIVE\nHigh Demand\nBOB Present',
+            fontsize=11, fontweight='bold', ha='center',
+            bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.8))
+
+    ax.text(8, 2, 'LOW PRIORITY\nLow Demand\nNo BOB Coverage',
+            fontsize=11, fontweight='bold', ha='center',
+            bbox=dict(boxstyle='round', facecolor='lightcoral', alpha=0.8))
+
+    ax.text(2, 2, 'SATURATED\nLow Demand\nBOB Present',
+            fontsize=11, fontweight='bold', ha='center',
+            bbox=dict(boxstyle='round', facecolor='lightgray', alpha=0.8))
+
+    ax.set_xlabel('Distance to Nearest BOB ATM (km)', fontsize=12, fontweight='bold')
+    ax.set_ylabel('Number of Nearby Competitors (within 1km)', fontsize=12, fontweight='bold')
+    ax.set_title('Strategic Location Priority Matrix\nHigh Demand + No BOB = Best Opportunities',
+                fontsize=14, fontweight='bold', pad=20)
+    ax.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('charts/9_location_priority_matrix.png', dpi=300, bbox_inches='tight')
+    print("✓ Created: charts/9_location_priority_matrix.png")
+    plt.close()
+
+
+def chart10_market_penetration_efficiency(data: List[Dict]) -> None:
+    """
+    Chart 10: Market Penetration Efficiency
+    Shows ATM count vs market coverage efficiency for each bank.
+    """
+    atm_types = ['ATM', 'A', 'atm', 'network_atm']
+
+    bank_atms = [loc for loc in data if loc['type'] in atm_types
+                 and is_valid_coords(loc.get('latitude', ''), loc.get('longitude', ''))]
+
+    # Calculate metrics for each bank
+    bank_metrics = {}
+
+    for bank in set(loc['source'] for loc in bank_atms):
+        bank_locs = [loc for loc in bank_atms if loc['source'] == bank]
+
+        if len(bank_locs) < 2:
+            continue
+
+        # Calculate average distance between own ATMs (lower = more clustered)
+        coords = [(safe_float(loc['latitude']), safe_float(loc['longitude']))
+                 for loc in bank_locs]
+
+        distances = []
+        for i, (lat1, lon1) in enumerate(coords[:100]):  # Sample for performance
+            for lat2, lon2 in coords[i+1:i+6]:
+                distances.append(haversine_distance(lat1, lon1, lat2, lon2))
+
+        avg_spacing = np.mean(distances) if distances else 0
+
+        bank_metrics[bank] = {
+            'count': len(bank_locs),
+            'avg_spacing': avg_spacing,
+            'coverage_score': len(bank_locs) / (avg_spacing + 1)  # Higher = better
+        }
+
+    # Create visualization
+    fig, ax = plt.subplots(figsize=(14, 10))
+
+    banks = list(bank_metrics.keys())
+    counts = [bank_metrics[b]['count'] for b in banks]
+    spacings = [bank_metrics[b]['avg_spacing'] for b in banks]
+
+    # Size represents coverage score
+    sizes = [bank_metrics[b]['coverage_score'] * 20 for b in banks]
+
+    # Color BOB differently
+    colors = ['#FF6B6B' if b == 'Bank of Baku' else '#4ECDC4' for b in banks]
+
+    scatter = ax.scatter(counts, spacings, s=sizes, c=colors, alpha=0.7,
+                        edgecolors='black', linewidths=2)
+
+    # Add bank labels
+    for bank, count, spacing in zip(banks, counts, spacings):
+        label = 'BOB' if bank == 'Bank of Baku' else bank.replace('Bank', '').strip()[:10]
+        ax.annotate(label, (count, spacing), fontsize=9, fontweight='bold',
+                   ha='center', va='center')
+
+    ax.set_xlabel('Number of ATMs', fontsize=12, fontweight='bold')
+    ax.set_ylabel('Average Spacing Between ATMs (km)', fontsize=12, fontweight='bold')
+    ax.set_title('Market Penetration Efficiency Analysis\nBubble Size = Coverage Score (ATMs per km²)',
+                fontsize=14, fontweight='bold', pad=20)
+    ax.grid(True, alpha=0.3)
+
+    # Add insight box
+    bob_spacing = bank_metrics.get('Bank of Baku', {}).get('avg_spacing', 0)
+    best_spacing = min(spacings)
+    insight = f"BOB Spacing: {bob_spacing:.1f} km\nBest in Market: {best_spacing:.1f} km\n"
+    insight += "Lower spacing = Better coverage density"
+
+    ax.text(0.02, 0.98, insight, transform=ax.transAxes,
+            bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.9),
+            verticalalignment='top', fontsize=10, fontweight='bold')
+
+    plt.tight_layout()
+    plt.savefig('charts/10_market_penetration_efficiency.png', dpi=300, bbox_inches='tight')
+    print("✓ Created: charts/10_market_penetration_efficiency.png")
+    plt.close()
+
+
+def chart11_competitor_coexistence_analysis(data: List[Dict]) -> None:
+    """
+    Chart 11: Competitor Co-existence Analysis
+    Shows which competitors tend to co-locate (market validation).
+    """
+    atm_types = ['ATM', 'A', 'atm', 'network_atm']
+
+    competitor_atms = [loc for loc in data if loc['source'] != 'Bank of Baku'
+                       and loc['type'] in atm_types
+                       and is_valid_coords(loc.get('latitude', ''), loc.get('longitude', ''))]
+
+    banks = list(set(loc['source'] for loc in competitor_atms))
+    coexistence_matrix = np.zeros((len(banks), len(banks)))
+
+    threshold = 0.5  # km
+
+    for i, bank1 in enumerate(banks):
+        bank1_locs = [loc for loc in competitor_atms if loc['source'] == bank1]
+
+        for j, bank2 in enumerate(banks):
+            if i >= j:
+                continue
+
+            bank2_locs = [loc for loc in competitor_atms if loc['source'] == bank2]
+
+            # Count how many bank1 ATMs have bank2 within threshold
+            colocated = 0
+            for loc1 in bank1_locs:
+                lat1 = safe_float(loc1['latitude'])
+                lon1 = safe_float(loc1['longitude'])
+
+                for loc2 in bank2_locs:
+                    lat2 = safe_float(loc2['latitude'])
+                    lon2 = safe_float(loc2['longitude'])
+
+                    if haversine_distance(lat1, lon1, lat2, lon2) <= threshold:
+                        colocated += 1
+                        break
+
+            coexistence_matrix[i][j] = colocated
+            coexistence_matrix[j][i] = colocated
+
+    fig, ax = plt.subplots(figsize=(12, 10))
+
+    im = ax.imshow(coexistence_matrix, cmap='YlOrRd', aspect='auto')
+
+    # Set ticks and labels
+    ax.set_xticks(np.arange(len(banks)))
+    ax.set_yticks(np.arange(len(banks)))
+    ax.set_xticklabels([b.replace('Bank', '').strip()[:15] for b in banks], rotation=45, ha='right')
+    ax.set_yticklabels([b.replace('Bank', '').strip()[:15] for b in banks])
+
+    # Add values
+    for i in range(len(banks)):
+        for j in range(len(banks)):
+            if i != j:
+                text = ax.text(j, i, int(coexistence_matrix[i, j]),
+                             ha="center", va="center", color="black", fontsize=9)
+
+    plt.colorbar(im, ax=ax, label='Number of Co-located ATMs')
+    ax.set_title(f'Competitor Co-existence Analysis\nATMs Within {threshold}km of Each Other',
+                fontsize=14, fontweight='bold', pad=20)
+
+    plt.tight_layout()
+    plt.savefig('charts/11_competitor_coexistence_analysis.png', dpi=300, bbox_inches='tight')
+    print("✓ Created: charts/11_competitor_coexistence_analysis.png")
+    plt.close()
+
+
+def chart12_expansion_roi_ranking(data: List[Dict]) -> None:
+    """
+    Chart 12: Top 30 Expansion Locations by ROI Score
+    Combines multiple factors into ROI ranking.
+    """
+    atm_types = ['ATM', 'A', 'atm', 'network_atm']
+
+    bob_atms = [(safe_float(loc['latitude']), safe_float(loc['longitude']))
+                for loc in data if loc['source'] == 'Bank of Baku'
+                and is_valid_coords(loc.get('latitude', ''), loc.get('longitude', ''))]
+
+    competitor_atms = [loc for loc in data if loc['source'] != 'Bank of Baku'
+                       and loc['type'] in atm_types
+                       and is_valid_coords(loc.get('latitude', ''), loc.get('longitude', ''))]
+
+    retail = [loc for loc in data if loc['source'] in ['Bazarstore', 'Bravo Supermarket', 'OBA Bank']
+              and is_valid_coords(loc.get('latitude', ''), loc.get('longitude', ''))]
+
+    scored_opportunities = []
+
+    # Score competitor locations
+    for comp in competitor_atms[:1000]:  # Sample for performance
+        comp_lat = safe_float(comp['latitude'])
+        comp_lon = safe_float(comp['longitude'])
+
+        # Factor 1: Distance to BOB (30% weight)
+        if bob_atms:
+            bob_dist = min(haversine_distance(comp_lat, comp_lon, bob_lat, bob_lon)
+                          for bob_lat, bob_lon in bob_atms)
+        else:
+            bob_dist = 10.0
+        distance_score = min(bob_dist / 10.0, 1.0) * 30
+
+        # Factor 2: Competitor density (40% weight)
+        nearby_comps = sum(1 for other in competitor_atms
+                          if other != comp
+                          and haversine_distance(comp_lat, comp_lon,
+                                                safe_float(other['latitude']),
+                                                safe_float(other['longitude'])) <= 1.0)
+        density_score = min(nearby_comps / 10.0, 1.0) * 40
+
+        # Factor 3: Retail proximity (30% weight)
+        nearest_retail = min([haversine_distance(comp_lat, comp_lon,
+                                                 safe_float(r['latitude']),
+                                                 safe_float(r['longitude']))
+                             for r in retail[:500]], default=10)
+        retail_score = max(0, (1 - nearest_retail / 2.0)) * 30
+
+        total_score = distance_score + density_score + retail_score
+
+        scored_opportunities.append({
+            'location': f"{comp.get('name', 'Unknown')[:30]}",
+            'score': total_score,
+            'bob_dist': bob_dist,
+            'competitors': nearby_comps
+        })
+
+    # Sort by score and get top 30
+    scored_opportunities.sort(key=lambda x: x['score'], reverse=True)
+    top_30 = scored_opportunities[:30]
+
+    fig, ax = plt.subplots(figsize=(14, 12))
+
+    locations = [f"{i+1}. {opp['location']}" for i, opp in enumerate(top_30)]
+    scores = [opp['score'] for opp in top_30]
+
+    colors = ['#2ECC71' if s >= 70 else '#F39C12' if s >= 50 else '#E74C3C' for s in scores]
+
+    bars = ax.barh(range(len(locations)), scores, color=colors, edgecolor='black', linewidth=1)
+    ax.set_yticks(range(len(locations)))
+    ax.set_yticklabels(locations, fontsize=8)
+
+    # Add score labels
+    for i, (bar, score, opp) in enumerate(zip(bars, scores, top_30)):
+        width = bar.get_width()
+        ax.text(width + 1, bar.get_y() + bar.get_height()/2,
+               f'{score:.0f}', ha='left', va='center', fontweight='bold', fontsize=8)
+
+    ax.set_xlabel('ROI Score (0-100)', fontsize=12, fontweight='bold')
+    ax.set_title('Top 30 Expansion Locations by ROI Score\nScoring: Gap (30%) + Demand (40%) + Retail (30%)',
+                fontsize=14, fontweight='bold', pad=20)
+    ax.grid(axis='x', alpha=0.3)
+
+    # Legend
+    from matplotlib.patches import Patch
+    legend_elements = [
+        Patch(facecolor='#2ECC71', label='Excellent (70-100)'),
+        Patch(facecolor='#F39C12', label='Good (50-69)'),
+        Patch(facecolor='#E74C3C', label='Fair (<50)')
+    ]
+    ax.legend(handles=legend_elements, loc='lower right')
+
+    plt.tight_layout()
+    plt.savefig('charts/12_expansion_roi_ranking.png', dpi=300, bbox_inches='tight')
+    print("✓ Created: charts/12_expansion_roi_ranking.png")
+    plt.close()
+
+
 def main():
     """Main execution function."""
     print("Starting strategic analysis for Bank of Baku ATM placement...\n")
@@ -640,6 +1068,11 @@ def main():
     gaps = chart5_coverage_gap_analysis(data)
     chart6_market_share_by_region(data)
     retail_opps = chart7_nearest_retail_opportunities(data)
+    chart8_competitor_proximity_analysis(data)
+    chart9_location_priority_matrix(data)
+    chart10_market_penetration_efficiency(data)
+    chart11_competitor_coexistence_analysis(data)
+    chart12_expansion_roi_ranking(data)
 
     # Generate insights report
     print("\nGenerating insights report...")
