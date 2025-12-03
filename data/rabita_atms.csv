@@ -1,0 +1,75 @@
+id,name,address,short_address,latitude,longitude,type,work_hours,work_hours_weekend,cash_in,exchange
+293,ATM Baş ofis 28 may,"Bakı şəh.,Nəsimi ray., Füzuli küç.71",,40.3792984904708,49.844924938477455,network_atm,24/7,,No,No
+301,ATM Torqoviy,S.Vurğun küç.24-30,,40.373126,49.842285,network_atm,24/7,,Yes,No
+283,ATM Mərkəz filialı,Bünyad Sərdarov küç 1.,,40.36702,49.83,network_atm,24/7,,Yes,No
+297,ATM Yasamal filialı,Şərifzadə küç. 408,,40.3842547,49.8017996,network_atm,24/7,,Yes,No
+290,ATM Səbail filialı,"Bakı şəh, Nəsimi r-nu. Asif Məhərrəmov küç.33",,40.4086667,49.8086603,network_atm,24/7,,Yes,No
+309,ATM Qara Qarayev,Qara Qarayev ev 30A,,40.417787,49.931251,network_atm,24/7,,Yes,No
+282,ATM Piramida plaza,28 May küç. 33,,40.379561,49.858012,network_atm,24/7,,Yes,No
+285,ATM Space TV,H.Cavid pr.12,,40.366316,49.817296,network_atm,24/7,,No,No
+334,ATM Sahil filialı,Ə.Rəcəbli küç.3,,40.403071,49.8684114,network_atm,24/7,,Yes,No
+286,ATM MUM,Nigar Refibeyli 33,,40.371006,49.834559,network_atm,24/7,,No,No
+346,ATM Xalqlar Dostluğu,Q.Qarayev PR.  Xalqlar Dostluğu metrosunun cənub-şərq çıxışı,,40.397205,49.952954,network_atm,24/7,,Yes,No
+288,ATM Sumqayıt filialı,"Sumqayıt şəh, S.Vurğun küç.102",,40.5971341,49.6725913,network_atm,24/7,,No,No
+284,ATM Bakıxanov,"Sabunçu rayonu, Sülh küç 14/2",,40.41854,49.963207,network_atm,24/7,,No,No
+291,ATM Nizami filialı,Bakı şəh Xətai ray Sarayevo Kuc 26 C,,40.3870185,49.9559028,network_atm,24/7,,No,No
+289,ATM Lənkəran filialı,Mirmustafaxan və Hacınəsir küç. kəsişməsi,,38.7570604,48.8478837,network_atm,24/7,,No,No
+287,ATM 8-ci mkr.,"8-ci mkr,C.Xəndan küç.ev 30 66ci məhəl",,40.417306,49.838806,network_atm,24/7,,No,No
+292,ATM Nəsimi filialı,Şəmsi Bədəlbəyli küç.96,,40.3770491,49.8406566,network_atm,24/7,,No,No
+294,ATM N.Nərimanov metrosu,Təbriz küç. 95,,40.403503,49.870672,network_atm,24/7,,No,No
+295,ATM Naxçıvan filialı,Naxçıvan şəhəri Heydər Əliyev pr.3,,39.2097241,45.4039527,network_atm,24/7,,No,No
+296,ATM Şərifzadə,"Yasamal r-nu, Şərifzadə küç. 243A",,40.38625,49.803056,network_atm,24/7,,No,No
+298,ATM Tibb Universiteti,Mirqasimov 1,,40.39375,49.83362,network_atm,24/7,,No,No
+299,ATM Nəsimi filialı,Şəmsi bədəlbəyli küçəsi,,40.377559,49.843234,network_atm,24/7,,No,No
+300,ATM 20 Yanvar,H.Zərdabi küç.31-65,,40.403517,49.807078,network_atm,24/7,,Yes,Yes
+302,ATM Azadlıq-176A,Azadlıq pr.176A,,40.394625,49.840612,network_atm,24/7,,No,No
+303,ATM 9-cu mkr.,"Bakı ş., Nəsimi r-nu, 3169-cu məhəllə, M.Cəlal küç., “İqtisadçı 2005” MTK",,40.41368712856011,49.80425118614605,network_atm,24/7,,No,No
+304,ATM Şəki filialı,"Şəki şəhəri, M.Ə.Rəsulzadə 178",,41.201314,47.1734227,network_atm,24/7,,No,No
+305,ATM Sumqayıt Karvan TM,"Sumqayıt şəh, N.Nərimanov k. ""Karvan"" Ticarət mərkəzi",,40.590392,49.675088,network_atm,24/7,,No,No
+306,ATM Gəncə filialı,"Gəncə şəh, H,Əliyev PR 273",,40.6980097,46.35666,network_atm,24/7,,No,No
+307,ATM Xaçmaz filialı,"Xaçmaz şəh., N.Nərimanov küç. 15 ",,41.466124,48.8016413,network_atm,24/7,,No,No
+308,ATM Gənclik,Atatürk pr. 18-30,,40.401729,49.851481,network_atm,24/7,,No,No
+310,ATM Şəmkir filialı,Şəmkir şəhəri Nizami küç 1,,40.830139,46.021574,network_atm,24/7,,No,No
+311,ATM Neftçilər metrosu,Qara Qarayev pr.2529 məh.,,40.409981,49.94381,network_atm,24/7,,No,No
+312,ATM Modern Hospital,"8 km, Babək pr.85K",,40.395527,49.947304,network_atm,24/7,,No,No
+313,ATM Caspian Plaza,Cəfər Cabbarlı küç.44,,40.3853444,49.8264935,network_atm,24/7,,No,No
+314,ATM Nərimanov filialı,İ.Hidayətzadə küç. 49/51.,,40.39487,49.8708499,network_atm,24/7,,No,No
+315,ATM Ağsu filialı,AĞSU şəh M.Ə.Rəsulzadə küç.9,,40.5675607,48.3889247,network_atm,24/7,,No,No
+316,ATM Qusar filialı,"Çingiz Qurbanov küç.,18A",,41.4305938,48.4361806,network_atm,24/7,,No,No
+317,ATM Modern Group,Ə.Rəcəbli 1075,,40.408618,49.86398,network_atm,24/7,,No,No
+318,ATM Neftçi FK,Yavər Əliyev 12,,40.381584,49.89733,network_atm,24/7,,No,No
+319,ATM Quba filialı,"Quba şəh,Heydər Əliyev Pr. və Tofiq Əhmədov küç. Kəsişməsi",,41.3604324,48.5105418,network_atm,24/7,,No,No
+320,ATM Şirvan filialı,"M.Ə.Rəsulzadə küç,12",,39.9327441,48.9225014,network_atm,24/7,,No,No
+321,ATM Kürdəmir filialı,H.Əliyev pr. 3-cü məhəllə 50,,40.3462641,48.1528613,network_atm,24/7,,No,No
+322,ATM Masallı filialı,H.Əliyev pr.H.Aslanov küç.kəsiş,,39.0259391,48.6628004,network_atm,24/7,,No,No
+323,ATM Xirdalan,"Xırdalan şəh, Heydər Əliyev pros 283",,40.452151,49.742802,network_atm,24/7,,No,No
+324,ATM EKOL,Babək pr.10B,,40.388742,49.870951,network_atm,24/7,,No,No
+325,ATM AZNEFTYAG,Nobel pr.64,,40.376782,49.907103,network_atm,24/7,,No,No
+326,ATM Ağcabədi filialı,Ağcabədi şəhəri Heydər Əliyev pr. 29,,40.0497848,47.4577465,network_atm,24/7,,No,No
+327,ATM NZS,O.Vəliyev küç.36,,40.399422,49.917607,network_atm,24/7,,No,No
+328,ATM Şamaxı filialı,Şamaxı r-nu  N.Nərmanov küç.66,,40.6375141,48.6332313,network_atm,24/7,,No,No
+329,ATM Badamdar,Seymur Məmmədov 11B,,40.3459651,49.8082443,network_atm,24/7,,No,No
+330,ATM 5 Mərtəbə,Ş.Qurbanov 4A,,40.375878,49.832597,network_atm,24/7,,No,No
+331,ATM Qaradağ,"Qaradağ, Salyan şossesi 83",,40.259663,49.652328,network_atm,24/7,,No,No
+332,ATM Sahil Qəsəbəsi,"Qaradağ, Sahil q/Dostlug ev 3",,40.223685,49.57825,network_atm,24/7,,No,No
+335,ATM Azerbaijan British College,M.Əliyev 20/41      Bakı İstedadlar,,40.400378,49.932202,network_atm,24/7,,No,No
+336,ATM Binəqədi,Azadlıq pr. 214,,40.436459,49.844635,network_atm,24 saat,,No,No
+337,ATM Socar Baş Ofis,"H.Əliyev pr ,121",,40.40538,49.88356,network_atm,24/7,,No,No
+338,ATM Quşçuluq Şirvan,"Hacıqabul ray, Ağacanlı kəndi",,39.9251411,48.9174213,network_atm,24/7,,No,No
+339,ATM İnqilab,Azadlıq və Həsən Əliyev 49 kəsişməsi,,40.400061,49.838592,network_atm,24/7,,No,No
+340,ATM Zaqulba,"Buzovna qəs, R.Imanov küç ev 22a",,40.527286,50.097927,network_atm,24/7,,No,No
+341,ATM Astaraçay,"Astara rayonu, Kakalos kəndi.",,38.623901,48.80712,network_atm,24/7,,No,No
+342,ATM Yeni Sahil T/M,"Qaradağ ray M, Seyidov kuc",,40.227032,49.576156,network_atm,24 saat,,No,No
+343,ATM 28 Mall,Azadlıq pr.27,,40.37917,49.846767,network_atm,24/7,,No,No
+344,ATM Bona Dea,Mehdi Abbasov küç.  Xarı Bül-Bül şadlıq evi ilə üzbəüz.,,40.41232,49.93045,network_atm,24/7,,No,No
+345,ATM Xətai filialı,Xocalı pr. 37,,40.3829951,49.8686413,network_atm,24/7,,No,No
+347,ATM Azgranata,"Qaradağ ray,Lökbatan qəs Heybət st, cənub şərq hissəsi",,40.336836,49.779521,network_atm,24/7,,No,No
+348,ATM Socar Polymer,Sumqayıt şəh.,,40.6128342045894,49.592935893101576,network_atm,24/7,,No,No
+350,ATM Həzi Aslanov,H.Aslanov metrosunun ukrayna dairəsi tərəfə çıxışda.,,40.376284,49.95398,network_atm,24/7,,No,No
+353,ATM Vergilər Nazirliyi,H.Cavid pr. və B.Vahabzadə küç. kəsişməsi,,40.37252,49.8189,network_atm,24/7,,No,No
+354,ATM Elmlər Akademiyası,Qurban Xəlilov küç. 41B,,40.375586,49.815978,network_atm,24/7,,No,No
+2084,ATM Boş Şelf Zavod 3,"Qaradağ, Salyan şossesi",,40.260693,49.660654,network_atm,24/7,,No,No
+2085,ATM Boş Şelf Zavod 4,"Qaradağ, Salyan şossesi",,40.260693,49.660654,network_atm,24/7,,No,No
+2489,ATM PRİMORSK,"Qaradağ, Sahil q/Dostlug ev 41",,40.223685,49.57825,network_atm,24/7,,No,No
+3118,ATM CRESCENT MALL,Neftçilər pr. 66,,40.37415838379602,49.860326776690556,network_atm,24/7,,No,No
+3119,ATM GƏNCƏ-2,H.Əliyev pr.423,,40.681101974566346,46.36248305665042,network_atm,24/7,,No,No
