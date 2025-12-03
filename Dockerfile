@@ -21,6 +21,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
 COPY app.py .
 COPY data ./data
 COPY charts ./charts
+COPY .streamlit ./.streamlit
 
 # Expose Streamlit default port
 EXPOSE 8501
