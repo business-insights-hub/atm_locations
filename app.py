@@ -792,129 +792,127 @@ elif page == "🏪 Retail Opportunities":
 
         st.markdown("---")
 
-        # Map and distribution
-        col1, col2 = st.columns([2, 1])
+        # Retail Opportunity Map
+        st.subheader("Retail Opportunity Map")
 
-        with col1:
-            st.subheader("Retail Opportunity Map")
+        top_20 = retail_opps_df.nlargest(20, 'opportunity_score')
 
-            top_20 = retail_opps_df.nlargest(20, 'opportunity_score')
+        fig = go.Figure()
 
-            fig = go.Figure()
+        # Add BOB ATMs
+        fig.add_trace(go.Scattermapbox(
+            lat=bob_atms['latitude'],
+            lon=bob_atms['longitude'],
+            mode='markers',
+            marker=dict(size=16, color='#1f77b4', symbol='circle'),
+            name=f'🏦 BOB ATMs ({len(bob_atms)})',
+            text=bob_atms.apply(
+                lambda x: f"<b>🏦 Bank of Baku ATM</b><br>" +
+                         f"📍 {x['address']}<br>" +
+                         f"📊 Coordinates: {x['latitude']:.5f}, {x['longitude']:.5f}",
+                axis=1
+            ),
+            hovertemplate='%{text}<extra></extra>'
+        ))
 
-            # Add BOB ATMs
-            fig.add_trace(go.Scattermapbox(
-                lat=bob_atms['latitude'],
-                lon=bob_atms['longitude'],
-                mode='markers',
-                marker=dict(size=16, color='#1f77b4', symbol='circle'),
-                name=f'🏦 BOB ATMs ({len(bob_atms)})',
-                text=bob_atms.apply(
-                    lambda x: f"<b>🏦 Bank of Baku ATM</b><br>" +
-                             f"📍 {x['address']}<br>" +
-                             f"📊 Coordinates: {x['latitude']:.5f}, {x['longitude']:.5f}",
-                    axis=1
-                ),
-                hovertemplate='%{text}<extra></extra>'
-            ))
+        # Add retail opportunities
+        fig.add_trace(go.Scattermapbox(
+            lat=top_20['latitude'],
+            lon=top_20['longitude'],
+            mode='markers',
+            marker=dict(
+                size=16,
+                color=top_20['opportunity_score'],
+                colorscale='Greens',
+                showscale=True,
+                colorbar=dict(title="Opportunity<br>Score"),
+                symbol='square'
+            ),
+            name=f'🏪 Potential ATM Sites (Top {len(top_20)})',
+            text=top_20.apply(
+                lambda x: f"<b>🏪 {get_display_name(x['source'])}</b><br>" +
+                         f"💡 Potential ATM Location<br>" +
+                         f"📍 {x['address']}<br>" +
+                         f"📏 Distance to BOB: {x['distance_to_bob']:.1f}km<br>" +
+                         f"🏧 Competitors nearby: {x['competitor_density']}<br>" +
+                         f"⭐ Opportunity Score: {x['opportunity_score']:.0f}<br>" +
+                         f"📊 Coordinates: {x['latitude']:.5f}, {x['longitude']:.5f}",
+                axis=1
+            ),
+            hovertemplate='%{text}<extra></extra>'
+        ))
 
-            # Add retail opportunities
-            fig.add_trace(go.Scattermapbox(
-                lat=top_20['latitude'],
-                lon=top_20['longitude'],
-                mode='markers',
-                marker=dict(
-                    size=16,
-                    color=top_20['opportunity_score'],
-                    colorscale='Greens',
-                    showscale=True,
-                    colorbar=dict(title="Opportunity<br>Score"),
-                    symbol='square'
-                ),
-                name=f'🏪 Potential ATM Sites (Top {len(top_20)})',
-                text=top_20.apply(
-                    lambda x: f"<b>🏪 {get_display_name(x['source'])}</b><br>" +
-                             f"💡 Potential ATM Location<br>" +
-                             f"📍 {x['address']}<br>" +
-                             f"📏 Distance to BOB: {x['distance_to_bob']:.1f}km<br>" +
-                             f"🏧 Competitors nearby: {x['competitor_density']}<br>" +
-                             f"⭐ Opportunity Score: {x['opportunity_score']:.0f}<br>" +
-                             f"📊 Coordinates: {x['latitude']:.5f}, {x['longitude']:.5f}",
-                    axis=1
-                ),
-                hovertemplate='%{text}<extra></extra>'
-            ))
+        center_lat = top_20['latitude'].mean()
+        center_lon = top_20['longitude'].mean()
 
-            center_lat = top_20['latitude'].mean()
-            center_lon = top_20['longitude'].mean()
-
-            fig.update_layout(
-                mapbox=dict(
-                    style="open-street-map",
-                    center=dict(lat=center_lat, lon=center_lon),
-                    zoom=11
-                ),
-                height=600,
-                margin=dict(l=0, r=0, t=0, b=0),
-                showlegend=True,
-                legend=dict(
-                    yanchor="top",
-                    y=0.98,
-                    xanchor="right",
-                    x=0.99,
-                    bgcolor="rgba(255, 255, 255, 0.95)",
-                    bordercolor="gray",
-                    borderwidth=1,
-                    font=dict(size=10)
-                )
+        fig.update_layout(
+            mapbox=dict(
+                style="open-street-map",
+                center=dict(lat=center_lat, lon=center_lon),
+                zoom=11
+            ),
+            height=600,
+            margin=dict(l=0, r=0, t=0, b=0),
+            showlegend=True,
+            legend=dict(
+                yanchor="top",
+                y=0.98,
+                xanchor="right",
+                x=0.99,
+                bgcolor="rgba(255, 255, 255, 0.95)",
+                bordercolor="gray",
+                borderwidth=1,
+                font=dict(size=10)
             )
+        )
 
-            st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True)
 
-        with col2:
-            st.subheader("Opportunities by Chain")
+        # Opportunities by Chain - Full width below map
+        st.markdown("---")
+        st.subheader("Opportunities by Chain")
 
-            # Aggregate by retail chain
-            opps_by_chain = retail_opps_df.groupby('source').agg({
-                'opportunity_score': 'mean'
-            }).reset_index()
-            opps_by_chain['Count'] = retail_opps_df.groupby('source').size().values
-            opps_by_chain.columns = ['Chain', 'Avg Score', 'Count']
-            opps_by_chain['Chain'] = opps_by_chain['Chain'].apply(get_display_name)
+        # Aggregate by retail chain
+        opps_by_chain = retail_opps_df.groupby('source').agg({
+            'opportunity_score': 'mean'
+        }).reset_index()
+        opps_by_chain['Count'] = retail_opps_df.groupby('source').size().values
+        opps_by_chain.columns = ['Chain', 'Avg Score', 'Count']
+        opps_by_chain['Chain'] = opps_by_chain['Chain'].apply(get_display_name)
 
-            fig = px.bar(
-                opps_by_chain,
-                x='Count',
-                y='Chain',
-                orientation='h',
-                color='Avg Score',
-                color_continuous_scale='Greens',
-                title='Opportunities by Retail Chain',
-                text='Count'
+        fig = px.bar(
+            opps_by_chain,
+            x='Count',
+            y='Chain',
+            orientation='h',
+            color='Avg Score',
+            color_continuous_scale='Greens',
+            title='Opportunities by Retail Chain',
+            text='Count'
+        )
+        fig.update_traces(
+            marker_line_color='white',
+            marker_line_width=1.5,
+            texttemplate='%{text}',
+            textposition='outside',
+            textfont=dict(size=11, color='black')
+        )
+        fig.update_layout(
+            height=400,
+            showlegend=False,
+            xaxis_title="Number of Opportunities",
+            yaxis_title="",
+            plot_bgcolor='rgba(0,0,0,0)',
+            xaxis=dict(gridcolor='rgba(200,200,200,0.2)'),
+            font=dict(size=11),
+            margin=dict(l=10, r=50, t=40, b=10),
+            coloraxis_colorbar=dict(
+                title="Avg<br>Score",
+                thickness=15,
+                len=0.7
             )
-            fig.update_traces(
-                marker_line_color='white',
-                marker_line_width=1.5,
-                texttemplate='%{text}',
-                textposition='outside',
-                textfont=dict(size=11, color='black')
-            )
-            fig.update_layout(
-                height=600,
-                showlegend=False,
-                xaxis_title="Number of Opportunities",
-                yaxis_title="",
-                plot_bgcolor='rgba(0,0,0,0)',
-                xaxis=dict(gridcolor='rgba(200,200,200,0.2)'),
-                font=dict(size=11),
-                margin=dict(l=10, r=50, t=40, b=10),
-                coloraxis_colorbar=dict(
-                    title="Avg<br>Score",
-                    thickness=15,
-                    len=0.7
-                )
-            )
-            st.plotly_chart(fig, use_container_width=True)
+        )
+        st.plotly_chart(fig, use_container_width=True)
 
         # Retail Chain Performance Analysis
         st.markdown("---")
@@ -1272,39 +1270,38 @@ elif page == "📈 Competitor Analysis":
         options=[b for b in bank_atms['source'].unique() if b != 'Bank of Baku']
     )
 
-    col1, col2 = st.columns(2)
+    # Bank of Baku Heatmap - Full width
+    st.markdown(f"**Bank of Baku** ({len(bob_atms)} ATMs)")
+    fig = px.density_mapbox(
+        bob_atms,
+        lat='latitude',
+        lon='longitude',
+        radius=15,
+        zoom=10,
+        mapbox_style="open-street-map",
+        height=500
+    )
+    st.plotly_chart(fig, use_container_width=True)
 
-    with col1:
-        st.markdown(f"**Bank of Baku** ({len(bob_atms)} ATMs)")
-        fig = px.density_mapbox(
-            bob_atms,
-            lat='latitude',
-            lon='longitude',
-            radius=15,
-            zoom=10,
-            mapbox_style="open-street-map",
-            height=400
-        )
-        st.plotly_chart(fig, use_container_width=True)
+    # Comparison Bank Heatmap - Full width
+    st.markdown("---")
+    comparison_data = bank_atms[bank_atms['source'] == comparison_bank]
+    st.markdown(f"**{comparison_bank}** ({len(comparison_data)} ATMs)")
 
-    with col2:
-        comparison_data = bank_atms[bank_atms['source'] == comparison_bank]
-        st.markdown(f"**{comparison_bank}** ({len(comparison_data)} ATMs)")
+    # Sample if too large
+    if len(comparison_data) > 500:
+        comparison_data = comparison_data.sample(500)
 
-        # Sample if too large
-        if len(comparison_data) > 500:
-            comparison_data = comparison_data.sample(500)
-
-        fig = px.density_mapbox(
-            comparison_data,
-            lat='latitude',
-            lon='longitude',
-            radius=15,
-            zoom=10,
-            mapbox_style="open-street-map",
-            height=400
-        )
-        st.plotly_chart(fig, use_container_width=True)
+    fig = px.density_mapbox(
+        comparison_data,
+        lat='latitude',
+        lon='longitude',
+        radius=15,
+        zoom=10,
+        mapbox_style="open-street-map",
+        height=500
+    )
+    st.plotly_chart(fig, use_container_width=True)
 
     st.markdown("---")
 

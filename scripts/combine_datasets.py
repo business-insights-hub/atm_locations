@@ -127,7 +127,7 @@ def normalize_br_atms(rows: List[Dict]) -> List[Dict]:
             "type": row.get("type", "ATM"),
             "location_id": row.get("id", ""),
             "name": row.get("title", ""),
-            "address": "",
+            "address": row.get("info", ""),
             "city": row.get("city_location", ""),
             "country": "Azerbaijan",
             "latitude": row.get("latitude", ""),
