@@ -1392,7 +1392,7 @@ elif page == "📈 Competitor Analysis":
         x=efficiency_df['ATM Count'].max() * 0.8,
         y=efficiency_df['Avg Spacing (km)'].min() * 1.2,
         showarrow=False,
-        font=dict(size=10, color='gray', style='italic')
+        font=dict(size=10, color='gray')
     )
     st.plotly_chart(fig, use_container_width=True)
 
