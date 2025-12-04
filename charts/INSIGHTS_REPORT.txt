@@ -5,7 +5,7 @@ STRATEGIC ATM PLACEMENT INSIGHTS FOR BANK OF BAKU
 CURRENT MARKET POSITION
 -----------------------
 • Total BOB ATMs: 35
-• Total Market ATMs: 2500
+• Total Market ATMs: 2475
 • BOB Market Share: 1.4%
 • Top Competitor: Kapital Bank with 1130 ATMs
 • Gap to Leader: 1095 ATMs
@@ -16,12 +16,12 @@ Top 5 Competitors by ATM Count:
   1. Kapital Bank: 1130 ATMs
   2. ABB Bank: 971 ATMs
   3. Xalq Bank: 133 ATMs
-  4. Bank Respublika: 109 ATMs
+  4. Bank Respublika: 84 ATMs
   5. Rabita Bank: 74 ATMs
 
 COVERAGE GAP ANALYSIS
 ---------------------
-• Identified 1549 high-priority coverage gaps
+• Identified 1544 high-priority coverage gaps
 • These are areas with competitor ATMs but no BOB presence within 2km
 • Recommendation: Prioritize these areas for immediate expansion
 
@@ -35,7 +35,7 @@ RETAIL PARTNERSHIP OPPORTUNITIES
 TOP STRATEGIC RECOMMENDATIONS
 ------------------------------
 1. IMMEDIATE PRIORITY: Fill coverage gaps
-   - 1549 locations identified where competitors operate but BOB doesn't
+   - 1544 locations identified where competitors operate but BOB doesn't
    - Focus on areas >2km from current BOB ATMs
 
 2. RETAIL PARTNERSHIPS: High foot-traffic locations
@@ -66,10 +66,10 @@ NEXT STEPS
 
 METHODOLOGY
 -----------
-Analysis based on 4377 total locations including:
-- 2500 bank ATMs from 7 banks
+Analysis based on 4351 total locations including:
+- 2475 bank ATMs from 7 banks
 - 1875 retail/branch locations
 - Geographic clustering and distance calculations using Haversine formula
 - 2km radius used as standard ATM service area
 
-Generated: 2025-12-03 23:19:59
+Generated: 2025-12-04 08:57:21

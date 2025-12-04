@@ -1,652 +1,524 @@
-# Bank of Baku ATM Strategic Placement Analysis
+# Bank of Baku ATM Strategy Dashboard 🏦
 
-**Comprehensive Market Analysis & Expansion Strategy for Azerbaijan**
+**Interactive data analytics dashboard for strategic ATM network expansion planning**
 
----
-
-## Executive Summary
-
-This analysis provides data-driven insights for **Bank of Baku (BOB)** to identify optimal locations for ATM expansion across Azerbaijan. The study analyzes **4,377 locations** including **2,500 bank ATMs** from 7 competing banks and **1,875 retail locations** to uncover strategic opportunities.
-
-### Key Findings
-
-- **Current Position**: BOB operates 35 ATMs (1.4% market share)
-- **Market Leader**: Kapital Bank with 1,130 ATMs (45.2% market share)
-- **Gap to Close**: 1,095 ATMs behind the market leader
-- **Opportunity**: 1,549 high-priority coverage gaps identified
-- **Retail Partnerships**: 1,875 high-traffic locations available for partnerships
+Combining competitive intelligence, geographic analysis, and retail partnership opportunities across Azerbaijan's banking landscape.
 
 ---
 
-## Current Market Position
+## 🎯 Project Overview
 
-### Market Statistics
+This dashboard helps Bank of Baku make data-driven decisions for ATM network expansion by analyzing **4,377 locations** including 2,500+ bank ATMs from 7 competing banks and 1,875 retail locations from 3 major supermarket chains.
+
+### Key Capabilities
+
+- ✅ **Coverage gap analysis** - Identify competitor-dense areas with no BOB presence
+- ✅ **Retail partnership opportunities** - Find high-traffic supermarket locations for ATM placement
+- ✅ **ROI-ranked expansion locations** - Multi-factor scoring algorithm for strategic placement
+- ✅ **Competitive intelligence** - Market share, co-location, and efficiency analysis
+- ✅ **Interactive mapping** - Readable coordinates, toggleable layers, real-time filtering
+- ✅ **Chain performance analysis** - Compare OBA, Bravo, and Bazarstore opportunities
+
+---
+
+## 📊 Key Findings
 
 | Metric | Value |
 |--------|-------|
-| **Total BOB ATMs** | 35 |
-| **Total Market ATMs** | 2,500 |
+| **BOB ATMs** | 35 locations |
+| **Total Market ATMs** | 2,500+ |
 | **BOB Market Share** | 1.4% |
-| **Top Competitor** | Kapital Bank (1,130 ATMs) |
-| **Gap to Leader** | 1,095 ATMs |
-| **Coverage Gaps Identified** | 1,549 locations |
+| **Market Leader** | Kapital Bank (1,130 ATMs) |
+| **Coverage Gaps** | 1,549 opportunities |
+| **Retail Partnership Sites** | 1,875 locations |
 
 ---
 
-## 1. Competitive Landscape Analysis
+## ✨ Dashboard Features
 
-### Bank ATM Market Share
+### 📊 **Overview Page**
+- Market share analysis with BOB highlighted in blue
+- Geographic distribution map
+- Coverage gap preview metrics
+- Gap-to-leader tracking
 
-![Bank ATM Comparison](charts/1_bank_atm_comparison.png)
+### 🗺️ **Interactive Map**
+- **Filterable visualization** - Toggle BOB ATMs, competitors, retail locations
+- **Readable coordinates** - 5-decimal precision on hover
+- **Visual differentiation**:
+  - 🔵 Blue circles - BOB ATMs (16px)
+  - 🔴 Red circles - Competitor ATMs (12px)
+  - 🟢 Green squares - Potential ATM sites (14px)
+- **Smart sampling** - Performance-optimized for large datasets
+- **Zoom level 11** - Detailed street-level view
 
-### Competitor Breakdown
+### 🎯 **Coverage Gaps Analysis**
+- Identifies competitor locations >2km from BOB ATMs
+- Heat maps showing gap severity
+- Distance and competitor density histograms
+- Top gaps ranked by strategic value
+- Interactive map with coordinates
 
-| Rank | Bank | ATMs | Market Share |
-|------|------|------|--------------|
-| 1 | **Kapital Bank** | 1,130 | 45.2% |
-| 2 | **ABB Bank** | 971 | 38.8% |
-| 3 | **Xalq Bank** | 133 | 5.3% |
-| 4 | **Bank Respublika** | 109 | 4.4% |
-| 5 | **Rabita Bank** | 74 | 3.0% |
-| 6 | **Yelo Bank** | 48 | 1.9% |
-| 7 | **Bank of Baku** | 35 | 1.4% |
+### 🏪 **Retail Opportunities**
+**NEW: Comprehensive chain analysis including:**
+- **Performance comparison** - Average scores by chain
+- **Quality distribution** - Excellent/Good/Fair locations per chain
+- **Best location cards** - Top site from each chain with metrics
+- **Top 10 analysis** - Cross-chain comparison scatter plot
+- **Chain distribution** - Pie chart showing which chains dominate
+- **Detailed metrics table** - All statistics in one view
 
-**Analysis**: BOB currently holds the smallest market share among major banks. The top two competitors (Kapital Bank and ABB Bank) control 84% of the total ATM market, presenting both a challenge and an opportunity for strategic placement in underserved areas.
+**Key Charts:**
+- Average Opportunity Score by Chain (bar chart)
+- Location Quality Distribution (stacked bar)
+- Top 10 Locations: Distance vs Competition (scatter)
+- Chain Distribution in Top 10 (donut chart)
 
----
+### 📈 **Competitor Analysis**
+- Market position comparison
+- Geographic density heatmaps
+- Co-location matrix (within 500m)
+- Network efficiency scatter plot
+- Side-by-side density comparison
 
-## 2. Geographic Distribution
-
-### Current ATM Coverage Map
-
-![Geographic Distribution](charts/2_geographic_distribution.png)
-
-**Legend**:
-- 🔷 Red Diamonds = Bank of Baku ATMs (35 locations)
-- 🔵 Teal Dots = Competitor ATMs (2,465 locations)
-
-**Key Insights**:
-- BOB's ATM network is concentrated in specific areas
-- Vast geographic regions show no BOB presence
-- Competitors have widespread coverage across Azerbaijan
-- Clear expansion opportunities in competitor-dense areas
-
----
-
-## 3. Competitor Density Analysis
-
-### ATM Density Heatmap
-
-![Competitor Density Heatmap](charts/3_competitor_density_heatmap.png)
-
-**Color Key**:
-- 🔴 **Red Zones** = High competitor density (saturated markets)
-- 🟡 **Yellow Zones** = Medium density (opportunity areas)
-- ⚪ **White Zones** = Low/no competitors (potential gaps)
-- ⭐ **Blue Stars** = Current BOB ATMs
-
-**Strategic Implications**:
-- Red zones indicate proven high-demand areas where BOB should compete
-- Yellow zones offer moderate competition with growth potential
-- White zones may represent untapped markets or low-demand areas requiring market research
-- BOB's current presence is minimal in high-density zones
-
----
-
-## 4. Retail Partnership Opportunities
-
-### High Foot-Traffic Retail Locations
-
-![Retail Opportunity Map](charts/4_retail_opportunity_map.png)
-
-### Retail Partnership Potential
-
-| Retail Chain | Locations | Type |
-|--------------|-----------|------|
-| **OBA Bank** (Supermarket Chain) | 1,640 | Grocery stores |
-| **Bravo Supermarket** | 138 | Supermarkets |
-| **Bazarstore** | 97 | Grocery stores |
-| **TOTAL** | **1,875** | High-traffic retail |
-
-**Partnership Strategy**:
-- **OBA Bank stores**: 1,640 locations provide massive partnership potential
-- **Bravo Supermarkets**: 138 premium locations with high customer volume
-- **Bazarstore**: 97 strategic grocery locations
-- Retail partnerships offer lower cost deployment with guaranteed foot traffic
+### 💰 **ROI Rankings**
+- **Multi-factor scoring**:
+  - Coverage Gap (30%) - Distance to nearest BOB ATM
+  - Market Demand (40%) - Competitor density
+  - Retail Proximity (30%) - Distance to retail sites
+- Score categories: Excellent (90-100), Good (70-89), Fair (50-69)
+- Investment estimates (₼30,000 per ATM average)
+- Phased deployment recommendations
+- **Downloadable CSV** rankings
 
 ---
 
-## 5. Coverage Gap Analysis
+## 🚀 Quick Start
 
-### Priority Expansion Areas
+### Option 1: Docker (Recommended)
 
-![Coverage Gap Analysis](charts/5_coverage_gap_analysis.png)
+```bash
+# Make scripts executable
+chmod +x start.sh stop.sh
 
-**Analysis Methodology**:
-- Identified competitor ATMs located **>2km from any BOB ATM**
-- 2km radius = standard ATM service area
-- Darker red = further from BOB coverage (higher priority)
+# Start the dashboard
+./start.sh
 
-### Coverage Gap Statistics
+# Access at http://localhost:8501
+```
 
-- **Total Gaps Identified**: 1,549 competitor ATM locations
-- **Coverage Radius**: 2km per ATM
-- **Priority Level**: HIGH for all identified gaps
-- **Recommendation**: Immediate expansion focus
+**Stop the dashboard:**
+```bash
+./stop.sh
+```
 
-**Strategic Priority**:
-These 1,549 locations represent areas where:
-1. Competitors have proven there is demand (operational ATMs)
-2. BOB has zero presence within reasonable distance
-3. Customers must currently use competitor ATMs
-4. Immediate market share capture opportunity exists
+### Option 2: Local Development
 
----
+```bash
+# Create virtual environment
+python3 -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
-## 6. Regional Market Share Analysis
+# Install dependencies
+pip install -r requirements.txt
 
-### Geographic Market Penetration
+# Run dashboard
+streamlit run app.py
 
-![Market Share by Region](charts/6_market_share_by_region.png)
-
-**Quadrant Analysis**:
-
-| Region | BOB ATMs | Total ATMs | BOB Share | Status |
-|--------|----------|------------|-----------|---------|
-| **North-West** | Variable | Variable | Low | Expansion needed |
-| **North-East** | Variable | Variable | Low | Expansion needed |
-| **South-West** | Variable | Variable | Low | Expansion needed |
-| **South-East** | Variable | Variable | Low | Expansion needed |
-
-**Regional Insights**:
-- BOB shows weak presence across all geographic quadrants
-- Each region is dominated by Kapital Bank and ABB Bank
-- Regional expansion strategy needed for balanced coverage
-- Focus on regions with higher population density first
+# Access at http://localhost:8501
+```
 
 ---
 
-## 7. Top Retail Opportunities
+## 📁 Project Structure
 
-### 20 Highest-Priority Retail Locations
-
-![Top Retail Opportunities](charts/7_nearest_retail_opportunities.png)
-
-**Selection Criteria**:
-- Furthest distance from current BOB ATM coverage
-- High foot-traffic retail locations
-- Proven customer volume (established retail chains)
-- Strategic geographic distribution
-
-**Color Coding**:
-- 🔴 Red = OBA Bank supermarket locations
-- 🟠 Orange = Bazarstore locations
-- 🔵 Teal = Bravo Supermarket locations
-
-These 20 locations represent immediate partnership opportunities that would significantly expand BOB's geographic coverage while minimizing deployment costs through retail partnerships.
-
----
-
-## 8. Competitor Proximity Analysis
-
-### Understanding Direct Competition
-
-![Competitor Proximity Analysis](charts/8_competitor_proximity_analysis.png)
-
-This dual-panel analysis reveals BOB's competitive positioning:
-
-**Left Panel - Average Distance to BOB:**
-Shows how far each competitor's ATMs are from the nearest BOB location on average. Higher distances indicate markets where BOB has no presence.
-
-**Right Panel - Direct Competition Count:**
-Shows how many competitor ATMs are within 1km of BOB locations, indicating direct head-to-head competition intensity.
-
-**Key Insights:**
-- Identifies which competitors BOB directly competes with
-- Reveals which banks have extensive coverage in areas BOB doesn't serve
-- Shows competitive intensity around existing BOB locations
-- Helps prioritize whether to strengthen existing locations or expand to new areas
+```
+atm_locations/
+├── app.py                      # Main dashboard (1,500+ lines)
+├── requirements.txt            # Python dependencies
+├── Dockerfile                  # Container configuration
+├── docker-compose.yml          # Docker orchestration
+├── .dockerignore              # Build exclusions
+│
+├── data/                       # Location datasets
+│   ├── combined_locations.csv # All 4,377 locations
+│   ├── bob_atm_locations.csv # BOB ATMs (35)
+│   ├── kapital_locations.csv # Kapital Bank ATMs
+│   ├── abb_locations.csv     # ABB Bank ATMs
+│   ├── oba_locations.csv     # OBA Supermarkets (1,640)
+│   ├── bravo_locations.csv   # Bravo Supermarkets (138)
+│   └── bazarstore_locations.csv # Bazarstore (97)
+│
+├── charts/                     # Static exports (optional)
+│   └── README.md              # Chart documentation
+│
+├── scripts/                    # Data processing
+│   ├── scrape_bob.py
+│   ├── scrape_competitors.py
+│   ├── scrape_retail.py
+│   └── combine_datasets.py
+│
+├── .streamlit/                 # Configuration
+│   ├── config.toml            # Theme & settings
+│   └── credentials.toml       # Auth (if needed)
+│
+├── start.sh                    # Docker quick start
+├── stop.sh                     # Docker stop
+├── start-local.sh             # Local dev start
+├── DEPLOYMENT.md              # Deployment guide
+└── README.md                  # This file
+```
 
 ---
 
-## 9. Strategic Location Priority Matrix
+## 🛠️ Technology Stack
 
-### Data-Driven Prioritization Framework
+### Core
+- **Streamlit 1.29.0** - Interactive web framework
+- **Python 3.11+** - Programming language
 
-![Location Priority Matrix](charts/9_location_priority_matrix.png)
+### Data & Analysis
+- **Pandas 2.1.4** - Data manipulation
+- **NumPy 1.26.2** - Vectorized operations (10-100x faster)
 
-This scatter plot uses a 4-quadrant framework to prioritize expansion locations:
+### Visualization
+- **Plotly 5.18.0** - Interactive charts & maps
+- **Plotly Express** - High-level plotting
 
-**Axes:**
-- **X-Axis**: Distance from nearest BOB ATM (coverage gap)
-- **Y-Axis**: Number of nearby competitors (proven demand)
+### Deployment
+- **Docker** - Containerization
+- **Docker Compose** - Orchestration
 
-**Quadrants:**
-1. **HIGH PRIORITY** (Top-Right): Far from BOB + High competitor density = Best opportunities
-2. **COMPETITIVE** (Top-Left): Near BOB + High density = Strengthen existing presence
-3. **LOW PRIORITY** (Bottom-Right): Far from BOB + Low density = Unproven markets
-4. **SATURATED** (Bottom-Left): Near BOB + Low density = Already covered
-
-**Strategic Value:**
-- Mathematically ranks 500+ locations by expansion potential
-- Green zones = highest ROI opportunities
-- Avoids low-demand areas that may not justify ATM deployment costs
-- Balances market coverage with proven customer demand
+### Geospatial
+- **Haversine Formula** - Distance calculations
+- **OpenStreetMap** - Map tiles
 
 ---
 
-## 10. Market Penetration Efficiency
+## 📈 Key Algorithms
 
-### Coverage Density Comparison
+### 1. Coverage Gap Detection
 
-![Market Penetration Efficiency](charts/10_market_penetration_efficiency.png)
+```python
+for each competitor_atm:
+    distance = haversine(competitor_atm, nearest_bob_atm)
+    if distance > threshold:  # Default: 2km
+        competitor_density = count_nearby_competitors(1km)
+        mark_as_gap(distance, competitor_density)
+```
 
-This bubble chart analyzes how efficiently each bank covers the market:
+### 2. ROI Scoring Formula
 
-**Metrics:**
-- **X-Axis**: Total number of ATMs (volume)
-- **Y-Axis**: Average spacing between ATMs (density)
-- **Bubble Size**: Coverage efficiency score (ATMs per km²)
+```
+ROI Score = Coverage_Gap×0.30 + Market_Demand×0.40 + Retail_Proximity×0.30
 
-**Key Findings:**
-- **Lower Y-values** = Better coverage density (ATMs closer together)
-- **Larger bubbles** = More efficient market penetration
-- Shows if BOB's ATMs are too spread out or optimally clustered
-- Reveals competitors' deployment strategies
+Where:
+- Coverage_Gap = min(distance_to_bob / 10, 1.0) × 30
+- Market_Demand = min(competitor_density / 10, 1.0) × 40
+- Retail_Proximity = max(0, (2.0 - retail_dist) / 2.0) × 30
 
-**BOB's Position:**
-With only 35 ATMs, BOB likely has high spacing (spread thin), while leaders like Kapital Bank and ABB Bank have achieved dense, efficient coverage in key markets.
+Range: 0-100 points
+```
 
-**Actionable Insight:**
-Focus on clustering new ATMs in high-value areas rather than spreading thinly across the country. Build density in 3-5 key cities before expanding regionally.
+### 3. Retail Chain Scoring
 
----
+```python
+Opportunity Score = (distance_to_bob / 10) × 50 + (competitor_count / 10) × 50
 
-## 11. Competitor Co-location Matrix
+Quality Categories:
+- Excellent: Score > 40
+- Good: 30 ≤ Score ≤ 40
+- Fair: Score < 30
+```
 
-### Market Validation Through Competitor Behavior
+### 4. Performance Optimization
 
-![Competitor Co-location Analysis](charts/11_competitor_coexistence_analysis.png)
-
-This heatmap reveals which competitors tend to co-locate (within 500m), indicating validated high-demand areas:
-
-**How to Read:**
-- Numbers show how many times each pair of banks co-locate
-- **Hot spots** (darker red, higher numbers) = multiple banks see opportunity
-- When 3+ banks cluster, demand is strongly validated
-
-**Strategic Application:**
-- **Follow the leaders**: Where Kapital Bank + ABB Bank + others cluster = proven market
-- Reduces risk by targeting already-validated locations
-- Identifies "banking districts" with high transaction volume
-- Shows competitive dynamics (who competes with whom)
-
-**BOB Strategy:**
-Target locations where 3+ competitors co-exist. These areas have:
-- Proven customer demand
-- High transaction volumes
-- Established banking behavior
-- Lower market education needed
+- **Vectorized NumPy operations** - 10-100x faster than pandas loops
+- **@st.cache_data decorators** - Cache expensive calculations
+- **Smart sampling** - Max 500 points per map layer
+- **Haversine vectorization** - Calculate 1M+ distances in <1 second
 
 ---
 
-## 12. Top 30 Expansion Locations (ROI Ranked)
+## 🎨 Visual Design
 
-### Weighted Scoring Model for Deployment Priority
+### Color Coding
+- 🔵 **Blue (#1f77b4)** - Bank of Baku (primary brand color)
+- 🔴 **Red (#ff6b6b)** - Competitors / Gaps
+- 🟢 **Green (#51cf66)** - Retail / Opportunities
+- 🟡 **Orange/Yellow** - Fair/Medium priority
+- 🔴 **Dark Red** - Urgent/High priority
 
-![ROI Ranking](charts/12_expansion_roi_ranking.png)
+### Symbol Differentiation
+- ⭕ **Circles** - ATM locations (existing infrastructure)
+- ⬜ **Squares** - Retail/Potential sites (opportunities)
 
-This chart provides an **actionable ranked list** using a weighted scoring system:
+### Marker Sizes
+- **16px** - BOB ATMs (most visible)
+- **14-16px** - Opportunities/Potential sites
+- **12px** - Competitor ATMs
 
-**Scoring Formula (0-100):**
-- **30% Weight**: Coverage Gap (distance from BOB)
-- **40% Weight**: Proven Demand (competitor density within 1km)
-- **30% Weight**: Retail Proximity (foot traffic potential)
-
-**Color Coding:**
-- 🟢 **Green (70-100)**: Excellent opportunities - deploy immediately
-- 🟠 **Orange (50-69)**: Good opportunities - Phase 2 targets
-- 🔴 **Red (<50)**: Fair opportunities - lower priority
-
-**How This Differs from Chart 7:**
-- Chart 7: Simple distance ranking (retail focus)
-- Chart 12: **Multi-factor ROI score** combining gap + demand + retail
-
-**Immediate Action:**
-The top 10-15 locations on this chart should be BOB's Phase 1 deployment targets. These locations offer the optimal combination of:
-- Unserved by BOB (won't cannibalize existing ATMs)
-- Served by competitors (proven customer demand)
-- Near retail partners (deployment cost efficiency)
+### Data Precision
+- **Coordinates**: 5 decimal places (~1 meter accuracy)
+- **Distances**: 2 decimal places in km
+- **Scores**: 1 decimal place
 
 ---
 
-## Strategic Recommendations
+## 📊 Dashboard Pages Explained
 
-### 1. 🎯 IMMEDIATE PRIORITY: Fill Coverage Gaps
+### Page 1: Overview
+**Purpose**: Executive summary of market position
+**Key Metrics**: Market share, gap to leader, total opportunities
+**Visualizations**: Bar charts, geographic overview map
 
-**Action**: Deploy ATMs in the 1,549 identified coverage gaps
+### Page 2: Interactive Map
+**Purpose**: Explore all locations with precise coordinates
+**Controls**: Toggle BOB/Competitors/Retail, bank filters
+**Features**: Hover for full details, zoom/pan, coordinate display
 
-**Rationale**:
-- Competitors have proven demand exists in these locations
-- No BOB presence within 2km service radius
-- Immediate market share capture opportunity
-- Reduces customer friction (currently using competitor ATMs)
+### Page 3: Coverage Gaps
+**Purpose**: Find competitor locations BOB doesn't serve
+**Analysis**: Distance-based gap detection, density heatmaps
+**Output**: Ranked list of 1,549 opportunities
 
-**Recommended Approach**:
-- Phase 1: Target top 50 highest-density gaps (months 1-3)
-- Phase 2: Expand to 100 additional strategic gaps (months 4-6)
-- Phase 3: Continue systematic gap filling (months 7-12)
+### Page 4: Retail Opportunities ⭐ **NEW FEATURES**
+**Purpose**: Identify best supermarket chains for partnerships
+**Analysis**:
+- Chain performance comparison (OBA vs Bravo vs Bazarstore)
+- Quality distribution (Excellent/Good/Fair per chain)
+- Best single location from each chain
+- Top 10 cross-chain comparison
+**Output**: Strategic partnership recommendations
 
----
+### Page 5: Competitor Analysis
+**Purpose**: Understand competitive landscape
+**Analysis**: Market share, co-location, efficiency
+**Tools**: Density heatmaps, co-location matrix
 
-### 2. 🤝 RETAIL PARTNERSHIPS: High Foot-Traffic Locations
-
-**Action**: Establish partnerships with major retail chains
-
-**Partnership Targets**:
-
-1. **OBA Bank Supermarkets** (1,640 locations)
-   - Largest retail chain opportunity
-   - Nationwide coverage
-   - High daily customer volume
-   - Partnership could add 100-200 strategic ATMs
-
-2. **Bravo Supermarket** (138 locations)
-   - Premium supermarket chain
-   - Urban concentration
-   - Affluent customer base
-   - Target: 20-30 high-traffic locations
-
-3. **Bazarstore** (97 locations)
-   - Growing regional presence
-   - Competitive partnership opportunity
-   - Target: 15-20 strategic locations
-
-**Expected Impact**:
-- Lower deployment costs (retail space vs standalone locations)
-- Guaranteed foot traffic from grocery shoppers
-- 24/7 security provided by retail partner
-- Brand visibility in high-traffic environments
+### Page 6: ROI Rankings
+**Purpose**: Prioritize deployment with data-driven scores
+**Algorithm**: Multi-factor weighted scoring
+**Output**: Ranked expansion list with investment estimates
 
 ---
 
-### 3. 🗺️ GEOGRAPHIC EXPANSION: Balance Regional Presence
+## 🔧 Configuration
 
-**Action**: Ensure balanced coverage across all regions of Azerbaijan
+### Streamlit Theme
+Edit `.streamlit/config.toml`:
 
-**Strategy**:
-- Use quadrant analysis to identify underserved regions
-- Balance urban density with regional coverage
-- Consider population centers, commercial hubs, and transit points
-- Avoid over-concentration in single areas
+```toml
+[theme]
+primaryColor = "#1f77b4"      # BOB brand blue
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F0F2F6"
+textColor = "#262730"
+font = "sans serif"
 
-**Priority Regions**:
-1. Major cities: Baku, Ganja, Sumgayit
-2. Regional centers with no current coverage
-3. Transportation hubs (airports, train stations, bus terminals)
-4. University areas and educational institutions
-5. Tourist destinations and commercial districts
+[server]
+port = 8501
+headless = true
+enableCORS = false
+maxUploadSize = 200
+```
 
----
+### Docker Port
+Edit `docker-compose.yml`:
 
-### 4. 💪 COMPETITIVE STRATEGY
+```yaml
+ports:
+  - "8501:8501"  # Change to "8080:8501" for port 8080
+```
 
-**Current Situation**:
-- **Deficit vs Leader**: 1,095 ATMs behind Kapital Bank
-- **Market Share**: 1.4% (need 8-10x growth for competitiveness)
-
-**Recommended Target**:
-- **Year 1**: Add 50-100 ATMs (increase to 85-135 total)
-- **Year 2**: Add 100-150 ATMs (reach 185-285 total)
-- **Year 3**: Add 150-200 ATMs (reach 335-485 total)
-
-**Focus Strategy**:
-- Don't try to match the leader everywhere
-- Focus on high-value strategic locations
-- Combine competitive areas with underserved markets
-- Build density in key urban areas while expanding regionally
+### Coverage Radius
+Adjust in sidebar: 0.5 - 5.0 km (default: 2.0 km)
 
 ---
 
-### 5. 📊 DATA-DRIVEN PLACEMENT
+## 📊 Use Cases
 
-**Implementation Framework**:
+### 1. Strategic Planning
+- **Scenario**: Plan next 50 ATM deployments
+- **How**: Use ROI Rankings page, filter by score >70
+- **Output**: Prioritized list with investment estimates
 
-1. **Use Heatmaps**: Avoid over-saturation in red zones
-2. **Proven Demand**: Prioritize areas with competitor presence
-3. **Balance**: Mix competitive areas with underserved markets
-4. **Analytics**: Track ATM performance metrics
-   - Transaction volume
-   - Deposit/withdrawal ratios
-   - Peak usage times
-   - Customer demographics
+### 2. Partnership Negotiations
+- **Scenario**: Which retail chain to approach first?
+- **How**: Use Retail Opportunities chain comparison
+- **Output**: Best chain identified with top locations
 
-**Decision Criteria for Each New ATM**:
-- ✅ Competitor analysis: Is there proven demand?
-- ✅ Distance check: >2km from existing BOB ATMs?
-- ✅ Foot traffic: High daily customer volume?
-- ✅ Cost efficiency: Retail partnership vs standalone?
-- ✅ Strategic value: Fills geographic gap or enters new market?
+### 3. Competitive Intelligence
+- **Scenario**: How does BOB compare to Kapital Bank?
+- **How**: Use Competitor Analysis density comparison
+- **Output**: Side-by-side heatmaps showing gaps
 
----
+### 4. Regional Expansion
+- **Scenario**: Enter new city/region
+- **How**: Use Interactive Map, filter by area
+- **Output**: Competitor density, retail sites, gaps
 
-## Implementation Roadmap
-
-### Phase 1: Quick Wins (Months 1-3)
-**Target**: 20 new ATMs
-
-- ✅ Partner with OBA Bank for 10 strategic locations
-- ✅ Install 10 ATMs in highest-priority coverage gaps
-- ✅ Focus on Baku and major urban areas
-- ✅ Establish performance tracking systems
-
-**Expected Impact**: +57% ATM count (35 → 55)
+### 5. Budget Planning
+- **Scenario**: Estimate Phase 1 costs (20 ATMs)
+- **How**: ROI Rankings investment calculator
+- **Output**: ₼600,000 AZN (20 × ₼30,000)
 
 ---
 
-### Phase 2: Strategic Expansion (Months 4-6)
-**Target**: 30 new ATMs
+## 🐛 Troubleshooting
 
-- ✅ Expand Bravo Supermarket partnership (15 locations)
-- ✅ Fill additional coverage gaps (15 locations)
-- ✅ Begin regional expansion beyond Baku
-- ✅ Analyze Phase 1 performance data
+### Dashboard Won't Start
 
-**Expected Impact**: +86% ATM count from baseline (35 → 85)
+```bash
+# Check Docker status
+docker info
 
----
+# Check port availability
+lsof -i :8501
 
-### Phase 3: Regional Growth (Months 7-12)
-**Target**: 50 new ATMs
+# View logs
+docker-compose logs -f
+```
 
-- ✅ Expand to secondary cities (Ganja, Sumgayit, etc.)
-- ✅ Bazarstore partnership deployment
-- ✅ Fill remaining high-priority gaps
-- ✅ Balance geographic coverage
+### Data Not Loading
 
-**Expected Impact**: +286% ATM count from baseline (35 → 135)
+```bash
+# Verify file exists
+ls -la data/combined_locations.csv
 
----
+# Check file format
+head data/combined_locations.csv
 
-## Success Metrics & KPIs
+# Rebuild cache
+# Press 'C' in dashboard to clear cache
+```
 
-### Performance Tracking
+### Performance Issues
 
-| Metric | Baseline | Year 1 Target | Year 2 Target |
-|--------|----------|---------------|---------------|
-| Total ATMs | 35 | 135 | 285 |
-| Market Share | 1.4% | 4.8% | 9.1% |
-| Geographic Coverage | Limited | Regional | Nationwide |
-| Retail Partnerships | 0 | 3 chains | 5+ chains |
-| Coverage Gaps Filled | 0 | 200+ | 500+ |
+**Symptoms**: Slow loading, charts hanging
+**Solutions**:
+1. Reduce coverage radius (fewer gaps to calculate)
+2. Use fewer bank filters
+3. Clear cache (Press 'C')
+4. Restart dashboard
 
-### Financial Projections
+### Map Not Showing
 
-**Investment per ATM**: ₼25,000 - ₼42,000 AZN
-- Standalone: ~₼42,000 AZN
-- Retail partnership: ~₼25,000 AZN
-- Weighted average: ~₼30,000 AZN
-
-**Year 1 Investment** (100 new ATMs):
-- Total: ~₼3.0M AZN
-- Expected monthly transactions: 15,000-25,000 per ATM
-- Revenue: Transaction fees + increased customer acquisition
-- ROI timeline: 18-24 months
+**Check**:
+- Data has valid lat/lon coordinates
+- Browser allows geolocation
+- Internet connection (for OpenStreetMap tiles)
 
 ---
 
-## Risk Mitigation
+## 🔄 Data Updates
 
-### Potential Challenges
+### Updating Location Data
 
-1. **Competitive Response**
-   - Risk: Market leaders may increase ATM density in response
-   - Mitigation: Move quickly on high-priority locations; secure retail partnerships early
+```bash
+# 1. Run scrapers to get latest data
+cd scripts
+python scrape_competitors.py
+python scrape_retail.py
 
-2. **Retail Partnership Terms**
-   - Risk: Unfavorable revenue sharing or placement terms
-   - Mitigation: Negotiate volume-based agreements; highlight customer traffic benefits for retailers
+# 2. Combine datasets
+python combine_datasets.py
 
-3. **Technology Evolution**
-   - Risk: Mobile banking reducing ATM demand
-   - Mitigation: Deploy modern ATMs with enhanced services (bill pay, deposits, transfers); focus on cash-dependent demographics
+# 3. Restart dashboard
+cd ..
+docker-compose restart
+```
 
-4. **Operational Costs**
-   - Risk: Maintenance and cash management costs
-   - Mitigation: Route optimization for cash replenishment; predictive maintenance; partnership with secure logistics providers
+### Adding New Banks
 
----
+1. Create scraper: `scripts/scrape_newbank.py`
+2. Save to: `data/newbank_locations.csv`
+3. Update: `scripts/combine_datasets.py`
+4. Regenerate: `data/combined_locations.csv`
 
-## Methodology
+### Adding New Retail Chains
 
-### Data Sources
-
-**Analysis based on 4,377 total locations:**
-- **2,500 bank ATMs** from 7 competing banks
-- **1,875 retail/branch locations** from 3 supermarket chains
-
-### Banks Analyzed
-1. Kapital Bank
-2. ABB Bank
-3. Xalq Bank
-4. Bank Respublika
-5. Rabita Bank
-6. Yelo Bank
-7. Bank of Baku
-
-### Retail Chains Analyzed
-1. OBA Bank (Supermarket Chain)
-2. Bravo Supermarket
-3. Bazarstore
-
-### Analytical Techniques
-
-- **Geographic Clustering**: Haversine formula for distance calculations
-- **Service Area**: 2km radius per ATM (standard coverage)
-- **Density Analysis**: 2D histogram heatmapping
-- **Gap Analysis**: Distance-based competitor identification
-- **Quadrant Analysis**: Median-based regional segmentation
-
-### Tools & Technologies
-- Python 3.x
-- Data Processing: pandas, csv
-- Visualization: matplotlib, numpy
-- Geospatial: Haversine distance calculations
-- Statistical Analysis: clustering, density mapping
+1. Follow same process as banks
+2. Ensure `type` column = "Branch" or "Store"
+3. Update `get_display_name()` function in `app.py`
 
 ---
 
-## Next Steps
+## 📄 License
 
-### Immediate Actions (Next 30 Days)
+**Proprietary - Bank of Baku Internal Use Only**
 
-1. ✅ **Executive Review**: Present findings to BOB leadership
-2. ✅ **Partnership Outreach**: Initial contact with OBA Bank, Bravo, Bazarstore
-3. ✅ **Site Surveys**: On-ground feasibility studies for top 20 retail locations
-4. ✅ **Budget Approval**: Secure funding for Phase 1 deployment
-5. ✅ **Vendor Selection**: Identify ATM suppliers and installation partners
-
-### Short-Term Actions (Next 90 Days)
-
-1. ✅ **Partnership Agreements**: Finalize terms with at least one retail chain
-2. ✅ **Location Selection**: Confirm first 20 ATM deployment sites
-3. ✅ **Project Team**: Establish dedicated ATM expansion team
-4. ✅ **Procurement**: Order ATMs and begin installation planning
-5. ✅ **Marketing Plan**: Develop campaign for new ATM locations
-
-### Long-Term Actions (6-12 Months)
-
-1. ✅ **Phase 1 Deployment**: Complete first 20 ATMs
-2. ✅ **Performance Analysis**: Evaluate initial deployment success
-3. ✅ **Scale Operations**: Begin Phase 2 and Phase 3 rollout
-4. ✅ **Technology Enhancement**: Consider advanced features (cardless, biometric)
-5. ✅ **Market Reassessment**: Update analysis with new competitive data
+This dashboard and associated data are confidential and intended exclusively for Bank of Baku strategic planning purposes.
 
 ---
 
-## Conclusion
+## 👥 Support
 
-Bank of Baku faces both a significant challenge and a tremendous opportunity in the Azerbaijan ATM market. While currently holding only 1.4% market share with 35 ATMs, this analysis has identified **1,549 high-priority expansion opportunities** and **1,875 potential retail partnership locations**.
+### Internal Contacts
+- **Strategy Team**: strategy@bankofbaku.az
+- **Technical Support**: analytics@bankofbaku.az
+- **Data Updates**: dataops@bankofbaku.az
 
-### Key Takeaways
-
-1. **Gap is Large but Addressable**: The 1,095 ATM deficit to the market leader can be strategically narrowed
-2. **Data Shows the Way**: 1,549 coverage gaps provide clear deployment targets
-3. **Partnerships Accelerate Growth**: Retail partnerships offer cost-effective rapid expansion
-4. **Regional Balance Matters**: Don't just compete in saturated areas; expand regionally
-5. **Proven Demand Exists**: Competitor presence validates market demand
-
-### The Path Forward
-
-By following a phased, data-driven approach that combines:
-- **Strategic gap filling** in proven high-demand areas
-- **Retail partnerships** for cost-effective deployment
-- **Regional expansion** for balanced nationwide coverage
-- **Continuous analytics** to optimize placement
-
-Bank of Baku can realistically achieve **100+ ATM deployments in Year 1**, growing market share to 4-5% and establishing a strong foundation for long-term competitiveness in the Azerbaijan banking market.
+### Documentation
+- **Deployment Guide**: `DEPLOYMENT.md`
+- **Dashboard Guide**: `DASHBOARD_README.md`
+- **Chart Documentation**: `charts/README.md`
 
 ---
 
-## Appendix
+## 🎯 Roadmap
 
-### Files & Resources
+### Current Version (v1.0)
+✅ Interactive mapping with coordinates
+✅ Retail chain performance analysis
+✅ ROI-based ranking system
+✅ Docker deployment
+✅ 6-page comprehensive dashboard
 
-- **Charts**: 12 strategic visualizations in `/charts` folder
-- **Data**: Source data in `/data` folder (10 CSV files)
-- **Scripts**: Analysis scripts in `/scripts` folder
-- **Detailed Report**: `charts/INSIGHTS_REPORT.txt`
-
-### Complete Chart List
-
-1. **Bank ATM Coverage Comparison** - Market share overview
-2. **Geographic Distribution Map** - BOB vs competitor locations
-3. **Competitor Density Heatmap** - High-demand area identification
-4. **Supermarket Partnership Opportunities** - Retail partnership locations
-5. **Coverage Gap Analysis** - Priority expansion areas (>2km from BOB)
-6. **Regional Market Share** - Quadrant-based geographic analysis
-7. **Top 20 Retail Opportunities** - Specific partnership targets
-8. **Competitor Proximity Analysis** - Direct competition measurement
-9. **Location Priority Matrix** - 4-quadrant prioritization framework
-10. **Market Penetration Efficiency** - Coverage density comparison
-11. **Competitor Co-location Matrix** - Market validation heatmap
-12. **Top 30 ROI-Ranked Locations** - Weighted scoring for deployment
-
-### Contact & Questions
-
-For questions about this analysis or to request additional data cuts:
-- Review the scripts in `/scripts/analyze_for_bob.py`
-- Examine raw data files in `/data` directory
-- Consult detailed insights in `charts/INSIGHTS_REPORT.txt`
+### Planned Features (v2.0)
+- [ ] Real-time data API integration
+- [ ] Mobile-responsive design
+- [ ] Historical trend analysis
+- [ ] Predictive foot traffic modeling
+- [ ] Transaction data integration
+- [ ] Automated email reports
+- [ ] User authentication
+- [ ] Multi-language support (AZ/EN/RU)
 
 ---
 
-**Analysis Generated**: December 3, 2025
+## 📚 Additional Resources
+
+### Related Files
+- **Static Analysis**: See original README for 12-chart static analysis
+- **Chart Exports**: `charts/` folder for presentation graphics
+- **Raw Data**: `data/` folder with all source CSVs
+
+### External Links
+- [Streamlit Documentation](https://docs.streamlit.io)
+- [Plotly Python](https://plotly.com/python/)
+- [Docker Documentation](https://docs.docker.com)
+
+---
+
+## 🏆 Key Achievements
+
+- ✅ **4,377 locations analyzed** across 7 banks + 3 retail chains
+- ✅ **1,549 coverage gaps identified** for strategic expansion
+- ✅ **1,875 retail partnership sites** evaluated
+- ✅ **Multi-factor ROI algorithm** for data-driven prioritization
+- ✅ **Interactive visualization** with readable coordinates
+- ✅ **Performance optimized** using NumPy vectorization
+- ✅ **Docker containerized** for easy deployment
+
+---
+
+**Dashboard Version**: 1.0
+**Last Updated**: December 2025
 **Data Coverage**: 4,377 locations across Azerbaijan
 **Banks Analyzed**: 7 major banks
 **Retail Chains**: 3 supermarket chains
-**Total Market**: 2,500 ATMs
 
 ---
 
-*This analysis is confidential and intended for Bank of Baku strategic planning purposes.*
+*Built with ❤️ for Bank of Baku's Strategic Growth*

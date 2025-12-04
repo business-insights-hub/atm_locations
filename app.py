@@ -1637,7 +1637,7 @@ st.markdown(
     """
     <div style='text-align: center; color: gray; padding: 20px;'>
     <p><b>Bank of Baku ATM Strategy Dashboard</b></p>
-    <p>Data sources: 7 Banks • 3 Retail Chains • 4,377 Total Locations</p>
+    <p>Data sources: 7 Banks • 3 Retail Chains • 4,351 Total Locations</p>
     <p>Analysis based on geographic clustering and competitive intelligence</p>
     </div>
     """,
