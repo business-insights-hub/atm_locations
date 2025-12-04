@@ -371,25 +371,52 @@ if page == "📊 Overview":
         if len(map_data) > 500:
             map_data = map_data.sample(500)
 
-        fig = px.scatter_mapbox(
-            map_data,
-            lat='latitude',
-            lon='longitude',
-            color='source',
-            size_max=10,
-            zoom=10,
-            mapbox_style="open-street-map",
-            title='All Bank ATM Locations (Sample)',
-            height=500
-        )
+        fig = go.Figure()
+
+        # Add each bank as separate trace for better visibility
+        for bank in selected_banks:
+            bank_data = map_data[map_data['source'] == bank]
+
+            fig.add_trace(go.Scattermapbox(
+                lat=bank_data['latitude'],
+                lon=bank_data['longitude'],
+                mode='markers',
+                marker=dict(
+                    size=14 if bank == 'Bank of Baku' else 10,
+                    color='#1f77b4' if bank == 'Bank of Baku' else None,
+                    opacity=1.0 if bank == 'Bank of Baku' else 0.7
+                ),
+                name=bank,
+                text=bank_data.apply(
+                    lambda x: f"<b>{x['source']}</b><br>" +
+                             f"📍 {x['address']}<br>" +
+                             f"📊 Lat: {x['latitude']:.4f}<br>" +
+                             f"📊 Lon: {x['longitude']:.4f}",
+                    axis=1
+                ),
+                hovertemplate='%{text}<extra></extra>'
+            ))
+
+        center_lat = map_data['latitude'].mean()
+        center_lon = map_data['longitude'].mean()
+
         fig.update_layout(
+            mapbox=dict(
+                style="open-street-map",
+                center=dict(lat=center_lat, lon=center_lon),
+                zoom=11
+            ),
+            height=500,
+            margin=dict(l=0, r=0, t=30, b=0),
+            showlegend=True,
+            title="All Bank ATM Locations",
             legend=dict(
                 orientation="v",
                 yanchor="top",
                 y=0.99,
                 xanchor="right",
                 x=0.99,
-                bgcolor="rgba(255, 255, 255, 0.9)",
+                bgcolor="rgba(255, 255, 255, 0.95)",
                 bordercolor="gray",
                 borderwidth=1,
                 font=dict(size=9)
@@ -444,10 +471,15 @@ elif page == "🗺️ Interactive Map":
             lat=bob_atms['latitude'],
             lon=bob_atms['longitude'],
             mode='markers',
-            marker=dict(size=12, color='#1f77b4'),
-            name='BOB ATMs',
-            text=bob_atms['address'],
-            hovertemplate='<b>Bank of Baku</b><br>%{text}<extra></extra>'
+            marker=dict(size=16, color='#1f77b4', symbol='circle'),
+            name=f'BOB ATMs ({len(bob_atms)})',
+            text=bob_atms.apply(
+                lambda x: f"<b>🏦 Bank of Baku ATM</b><br>" +
+                         f"📍 {x['address']}<br>" +
+                         f"📊 Coordinates: {x['latitude']:.5f}, {x['longitude']:.5f}",
+                axis=1
+            ),
+            hovertemplate='%{text}<extra></extra>'
         ))
 
     if show_competitors:
@@ -460,10 +492,13 @@ elif page == "🗺️ Interactive Map":
             lat=competitor_sample['latitude'],
             lon=competitor_sample['longitude'],
             mode='markers',
-            marker=dict(size=8, opacity=0.6, color='red'),
-            name='Competitor ATMs',
+            marker=dict(size=12, opacity=0.7, color='#ff6b6b'),
+            name=f'Competitor ATMs ({len(competitor_sample)})',
             text=competitor_sample.apply(
-                lambda x: f"<b>{x['source']}</b><br>{x['address']}", axis=1
+                lambda x: f"<b>🏧 {x['source']}</b><br>" +
+                         f"📍 {x['address']}<br>" +
+                         f"📊 Coordinates: {x['latitude']:.5f}, {x['longitude']:.5f}",
+                axis=1
             ),
             hovertemplate='%{text}<extra></extra>'
         ))
@@ -477,10 +512,14 @@ elif page == "🗺️ Interactive Map":
             lat=retail_sample['latitude'],
             lon=retail_sample['longitude'],
             mode='markers',
-            marker=dict(size=6, color='green', symbol='circle'),
-            name='Retail Locations',
+            marker=dict(size=14, color='#51cf66', symbol='square', opacity=0.8),
+            name=f'🏪 Potential ATM Sites ({len(retail_sample)})',
             text=retail_sample.apply(
-                lambda x: f"{get_display_name(x['source'])}<br>{x['address']}", axis=1
+                lambda x: f"<b>🏪 {get_display_name(x['source'])}</b><br>" +
+                         f"💡 Potential ATM Location<br>" +
+                         f"📍 {x['address']}<br>" +
+                         f"📊 Coordinates: {x['latitude']:.5f}, {x['longitude']:.5f}",
+                axis=1
             ),
             hovertemplate='%{text}<extra></extra>'
         ))
@@ -493,14 +532,16 @@ elif page == "🗺️ Interactive Map":
         mapbox=dict(
             style="open-street-map",
             center=dict(lat=center_lat, lon=center_lon),
-            zoom=10
+            zoom=11
         ),
         height=700,
-        margin=dict(l=0, r=0, t=0, b=0),
+        margin=dict(l=0, r=0, t=30, b=0),
         showlegend=True,
+        title="ATM & Potential Location Map",
+        title_font=dict(size=16),
         legend=dict(
             yanchor="top",
-            y=0.98,
+            y=0.99,
             xanchor="left",
             x=0.01,
             bgcolor="rgba(255, 255, 255, 0.95)",
@@ -572,10 +613,15 @@ elif page == "🎯 Coverage Gaps":
                 lat=bob_atms['latitude'],
                 lon=bob_atms['longitude'],
                 mode='markers',
-                marker=dict(size=12, color='blue'),
-                name='BOB ATMs',
-                text=bob_atms['address'],
-                hovertemplate='<b>BOB ATM</b><br>%{text}<extra></extra>'
+                marker=dict(size=16, color='#1f77b4', symbol='circle'),
+                name=f'🏦 BOB ATMs ({len(bob_atms)})',
+                text=bob_atms.apply(
+                    lambda x: f"<b>🏦 Bank of Baku ATM</b><br>" +
+                             f"📍 {x['address']}<br>" +
+                             f"📊 Coordinates: {x['latitude']:.5f}, {x['longitude']:.5f}",
+                    axis=1
+                ),
+                hovertemplate='%{text}<extra></extra>'
             ))
 
             # Add coverage gaps
@@ -584,15 +630,21 @@ elif page == "🎯 Coverage Gaps":
                 lon=gaps_to_show['longitude'],
                 mode='markers',
                 marker=dict(
-                    size=10,
+                    size=14,
                     color=gaps_to_show['distance_to_bob'],
                     colorscale='Reds',
                     showscale=True,
-                    colorbar=dict(title="Distance<br>to BOB (km)")
+                    colorbar=dict(title="Distance<br>to BOB (km)"),
+                    symbol='circle'
                 ),
-                name=f'Top {len(gaps_to_show)} Gaps',
+                name=f'🎯 Coverage Gaps (Top {len(gaps_to_show)})',
                 text=gaps_to_show.apply(
-                    lambda x: f"{x['source']}<br>{x['address']}<br>Distance: {x['distance_to_bob']:.1f}km<br>Competitors nearby: {x['competitor_density']}",
+                    lambda x: f"<b>🎯 Coverage Gap</b><br>" +
+                             f"🏧 {x['source']}<br>" +
+                             f"📍 {x['address']}<br>" +
+                             f"📏 Distance: {x['distance_to_bob']:.1f}km<br>" +
+                             f"🏪 Competitors nearby: {x['competitor_density']}<br>" +
+                             f"📊 Coordinates: {x['latitude']:.5f}, {x['longitude']:.5f}",
                     axis=1
                 ),
                 hovertemplate='%{text}<extra></extra>'
@@ -605,7 +657,7 @@ elif page == "🎯 Coverage Gaps":
                 mapbox=dict(
                     style="open-street-map",
                     center=dict(lat=center_lat, lon=center_lon),
-                    zoom=10
+                    zoom=11
                 ),
                 height=600,
                 margin=dict(l=0, r=0, t=0, b=0),
@@ -755,10 +807,15 @@ elif page == "🏪 Retail Opportunities":
                 lat=bob_atms['latitude'],
                 lon=bob_atms['longitude'],
                 mode='markers',
-                marker=dict(size=10, color='blue'),
-                name='BOB ATMs',
-                text=bob_atms['address'],
-                hovertemplate='<b>BOB ATM</b><br>%{text}<extra></extra>'
+                marker=dict(size=16, color='#1f77b4', symbol='circle'),
+                name=f'🏦 BOB ATMs ({len(bob_atms)})',
+                text=bob_atms.apply(
+                    lambda x: f"<b>🏦 Bank of Baku ATM</b><br>" +
+                             f"📍 {x['address']}<br>" +
+                             f"📊 Coordinates: {x['latitude']:.5f}, {x['longitude']:.5f}",
+                    axis=1
+                ),
+                hovertemplate='%{text}<extra></extra>'
             ))
 
             # Add retail opportunities
@@ -767,15 +824,22 @@ elif page == "🏪 Retail Opportunities":
                 lon=top_20['longitude'],
                 mode='markers',
                 marker=dict(
-                    size=12,
+                    size=16,
                     color=top_20['opportunity_score'],
                     colorscale='Greens',
                     showscale=True,
-                    colorbar=dict(title="Opportunity<br>Score")
+                    colorbar=dict(title="Opportunity<br>Score"),
+                    symbol='square'
                 ),
-                name='Retail Opportunities',
+                name=f'🏪 Potential ATM Sites (Top {len(top_20)})',
                 text=top_20.apply(
-                    lambda x: f"{get_display_name(x['source'])}<br>{x['address']}<br>Distance: {x['distance_to_bob']:.1f}km<br>Competitors: {x['competitor_density']}<br>Score: {x['opportunity_score']:.0f}",
+                    lambda x: f"<b>🏪 {get_display_name(x['source'])}</b><br>" +
+                             f"💡 Potential ATM Location<br>" +
+                             f"📍 {x['address']}<br>" +
+                             f"📏 Distance to BOB: {x['distance_to_bob']:.1f}km<br>" +
+                             f"🏧 Competitors nearby: {x['competitor_density']}<br>" +
+                             f"⭐ Opportunity Score: {x['opportunity_score']:.0f}<br>" +
+                             f"📊 Coordinates: {x['latitude']:.5f}, {x['longitude']:.5f}",
                     axis=1
                 ),
                 hovertemplate='%{text}<extra></extra>'
@@ -788,7 +852,7 @@ elif page == "🏪 Retail Opportunities":
                 mapbox=dict(
                     style="open-street-map",
                     center=dict(lat=center_lat, lon=center_lon),
-                    zoom=10
+                    zoom=11
                 ),
                 height=600,
                 margin=dict(l=0, r=0, t=0, b=0),
@@ -1167,10 +1231,15 @@ else:  # ROI Rankings page
                 lat=bob_atms['latitude'],
                 lon=bob_atms['longitude'],
                 mode='markers',
-                marker=dict(size=10, color='blue'),
-                name='Existing BOB ATMs',
-                text=bob_atms['address'],
-                hovertemplate='<b>BOB ATM</b><br>%{text}<extra></extra>'
+                marker=dict(size=16, color='#1f77b4', symbol='circle'),
+                name=f'🏦 Existing BOB ATMs ({len(bob_atms)})',
+                text=bob_atms.apply(
+                    lambda x: f"<b>🏦 Bank of Baku ATM</b><br>" +
+                             f"📍 {x['address']}<br>" +
+                             f"📊 Coordinates: {x['latitude']:.5f}, {x['longitude']:.5f}",
+                    axis=1
+                ),
+                hovertemplate='%{text}<extra></extra>'
             ))
 
             # Add top opportunities with color gradient
@@ -1179,17 +1248,24 @@ else:  # ROI Rankings page
                 lon=top_locations['longitude'],
                 mode='markers',
                 marker=dict(
-                    size=14,
+                    size=16,
                     color=top_locations['roi_score'],
                     colorscale='RdYlGn',
                     showscale=True,
                     colorbar=dict(title="ROI<br>Score"),
                     cmin=50,
-                    cmax=100
+                    cmax=100,
+                    symbol='square'
                 ),
-                name='Expansion Opportunities',
+                name=f'💎 Expansion Opportunities (Top {len(top_locations)})',
                 text=top_locations.apply(
-                    lambda x: f"<b>ROI Score: {x['roi_score']:.1f}</b><br>{x['source']}<br>{x['address']}<br>Distance to BOB: {x['distance_to_bob']:.1f}km<br>Competitors: {x['competitor_density']}",
+                    lambda x: f"<b>💎 ROI Score: {x['roi_score']:.1f}</b><br>" +
+                             f"🏧 {x['source']}<br>" +
+                             f"💡 Potential ATM Location<br>" +
+                             f"📍 {x['address']}<br>" +
+                             f"📏 Distance to BOB: {x['distance_to_bob']:.1f}km<br>" +
+                             f"🏪 Competitors nearby: {x['competitor_density']}<br>" +
+                             f"📊 Coordinates: {x['latitude']:.5f}, {x['longitude']:.5f}",
                     axis=1
                 ),
                 hovertemplate='%{text}<extra></extra>'
@@ -1202,7 +1278,7 @@ else:  # ROI Rankings page
                 mapbox=dict(
                     style="open-street-map",
                     center=dict(lat=center_lat, lon=center_lon),
-                    zoom=10
+                    zoom=11
                 ),
                 height=600,
                 margin=dict(l=0, r=0, t=0, b=0),
