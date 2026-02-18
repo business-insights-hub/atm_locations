@@ -12,14 +12,17 @@
     "test:offline": "node --test tests/smoke.mjs"
   },
   "dependencies": {
+    "@types/leaflet": "^1.9.21",
+    "leaflet": "^1.9.4",
     "next": "14.2.26",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "react-leaflet": "^5.0.0"
   },
   "devDependencies": {
-    "typescript": "5.7.2",
     "@types/node": "20.17.57",
     "@types/react": "18.3.18",
-    "@types/react-dom": "18.3.5"
+    "@types/react-dom": "18.3.5",
+    "typescript": "5.7.2"
   }
 }
