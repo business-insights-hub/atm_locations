@@ -108,6 +108,7 @@ export default function Dashboard({
   const [radiusKm, setRadiusKm] = useState(2);
   const [mapFilter, setMapFilter] = useState<MapFilter>("all");
   const [mapLimit, setMapLimit] = useState(800);
+  const [selectedSources, setSelectedSources] = useState<string[]>([]);
 
   const bankCounts = useMemo(() => {
     const counts = new Map<string, number>();
@@ -137,6 +138,8 @@ export default function Dashboard({
       .map(([source, count]) => ({ source, count }))
       .sort((a, b) => b.count - a.count);
   }, [data]);
+
+  const allSources = useMemo(() => sourceMix.map((x) => x.source), [sourceMix]);
 
   const geoBounds = useMemo(() => {
     const lats = data.map((x) => x.latitude);
@@ -169,8 +172,10 @@ export default function Dashboard({
       }
       return !["ATM", "A", "atm", "network_atm"].includes(row.type);
     });
-    return source.slice(0, mapLimit);
-  }, [data, mapFilter, mapLimit]);
+    const sourceFiltered =
+      selectedSources.length > 0 ? source.filter((row) => selectedSources.includes(row.source)) : source;
+    return sourceFiltered.slice(0, mapLimit);
+  }, [data, mapFilter, mapLimit, selectedSources]);
 
   return (
     <main className="page">
@@ -407,6 +412,41 @@ export default function Dashboard({
               onChange={(e) => setMapLimit(Number(e.target.value))}
             />
             <span className="range-value">{formatInt(mapLimit)}</span>
+          </section>
+
+          <section className="card">
+            <h3 className="table-title">Source Filter</h3>
+            <div className="source-actions">
+              <button className="tab" onClick={() => setSelectedSources(allSources)}>Select All</button>
+              <button className="tab" onClick={() => setSelectedSources([])}>Clear</button>
+            </div>
+            <div className="source-grid">
+              {allSources.map((source) => {
+                const checked = selectedSources.length === 0 || selectedSources.includes(source);
+                return (
+                  <label key={source} className="source-item">
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={(e) => {
+                        if (selectedSources.length === 0) {
+                          if (!e.target.checked) {
+                            setSelectedSources(allSources.filter((s) => s !== source));
+                          }
+                          return;
+                        }
+                        if (e.target.checked) {
+                          setSelectedSources([...selectedSources, source]);
+                        } else {
+                          setSelectedSources(selectedSources.filter((s) => s !== source));
+                        }
+                      }}
+                    />
+                    <span>{source}</span>
+                  </label>
+                );
+              })}
+            </div>
           </section>
 
           <section className="grid metrics-grid">

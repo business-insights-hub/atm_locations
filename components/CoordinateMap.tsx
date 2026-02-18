@@ -20,8 +20,27 @@ const SOURCE_COLORS: Record<string, string> = {
   Bazarstore: "#1e7f5e"
 };
 
+const FALLBACK_COLORS = ["#1f77b4", "#ff7f0e", "#2ca02c", "#9467bd", "#17becf", "#e377c2", "#8c564b"];
+
+function normalizeSource(source: string): string {
+  const s = source.trim();
+  if (s === "OBA Bank") {
+    return "OBA Supermarket";
+  }
+  return s;
+}
+
+function fallbackColor(source: string): string {
+  let hash = 0;
+  for (let i = 0; i < source.length; i += 1) {
+    hash = (hash * 31 + source.charCodeAt(i)) >>> 0;
+  }
+  return FALLBACK_COLORS[hash % FALLBACK_COLORS.length];
+}
+
 function markerColor(source: string): string {
-  return SOURCE_COLORS[source] ?? "#6f7f97";
+  const normalized = normalizeSource(source);
+  return SOURCE_COLORS[normalized] ?? fallbackColor(normalized);
 }
 
 function markerRadius(source: string): number {
@@ -63,7 +82,12 @@ export default function CoordinateMap({ points }: Props) {
             key={`${point.source}-${point.latitude}-${point.longitude}-${idx}`}
             center={[point.latitude, point.longitude]}
             radius={markerRadius(point.source)}
-            pathOptions={{ color: markerColor(point.source), fillOpacity: 0.7, weight: 1.2 }}
+            pathOptions={{
+              color: markerColor(point.source),
+              fillColor: markerColor(point.source),
+              fillOpacity: 0.85,
+              weight: 1.2
+            }}
           >
             <Popup>
               <div>

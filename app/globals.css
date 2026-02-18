@@ -293,6 +293,29 @@ th {
   color: #183f67;
 }
 
+.source-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.source-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 8px;
+}
+
+.source-item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  border: 1px solid #e2eaf7;
+  background: #f9fbff;
+  border-radius: 10px;
+  padding: 7px 9px;
+  font-size: 0.85rem;
+}
+
 .map-shell {
   width: 100%;
   height: clamp(320px, 56vh, 620px);
