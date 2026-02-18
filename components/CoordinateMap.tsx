@@ -7,14 +7,31 @@ type Props = {
   points: LocationRecord[];
 };
 
+const SOURCE_COLORS: Record<string, string> = {
+  "Bank of Baku": "#0f5fa8",
+  "Kapital Bank": "#d44f3a",
+  "ABB Bank": "#8e4dcf",
+  "Xalq Bank": "#f08c00",
+  "Bank Respublika": "#2f8f83",
+  "Rabita Bank": "#b82f6c",
+  "Yelo Bank": "#caa000",
+  "OBA Supermarket": "#0b9c7b",
+  "Bravo Supermarket": "#2a9d5b",
+  Bazarstore: "#1e7f5e"
+};
+
 function markerColor(source: string): string {
+  return SOURCE_COLORS[source] ?? "#6f7f97";
+}
+
+function markerRadius(source: string): number {
   if (source === "Bank of Baku") {
-    return "#0f5fa8";
+    return 7;
   }
-  if (source.includes("Supermarket") || source.includes("Bazarstore") || source.includes("OBA")) {
-    return "#0b9c7b";
+  if (source.includes("Supermarket") || source === "Bazarstore") {
+    return 5;
   }
-  return "#d35454";
+  return 5.5;
 }
 
 export default function CoordinateMap({ points }: Props) {
@@ -27,6 +44,14 @@ export default function CoordinateMap({ points }: Props) {
 
   return (
     <div className="map-shell">
+      <div className="map-legend">
+        {Object.entries(SOURCE_COLORS).map(([source, color]) => (
+          <div key={source} className="legend-item">
+            <span className="legend-dot" style={{ backgroundColor: color }} />
+            <span>{source}</span>
+          </div>
+        ))}
+      </div>
       <MapContainer center={[centerLat, centerLon]} zoom={8} scrollWheelZoom className="map-view">
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -37,7 +62,7 @@ export default function CoordinateMap({ points }: Props) {
           <CircleMarker
             key={`${point.source}-${point.latitude}-${point.longitude}-${idx}`}
             center={[point.latitude, point.longitude]}
-            radius={5}
+            radius={markerRadius(point.source)}
             pathOptions={{ color: markerColor(point.source), fillOpacity: 0.7, weight: 1.2 }}
           >
             <Popup>
