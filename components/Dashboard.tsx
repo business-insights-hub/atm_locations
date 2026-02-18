@@ -181,7 +181,44 @@ export default function Dashboard({
       return !["ATM", "A", "atm", "network_atm"].includes(row.type);
     });
     const sourceFiltered = source.filter((row) => selectedSources.includes(row.source));
-    return sourceFiltered.slice(0, mapLimit);
+
+    if (sourceFiltered.length <= mapLimit) {
+      return sourceFiltered;
+    }
+
+    // Balance the map sample across sources so one large source does not dominate.
+    const bySource = new Map<string, LocationRecord[]>();
+    for (const row of sourceFiltered) {
+      const key = row.source;
+      const bucket = bySource.get(key);
+      if (bucket) {
+        bucket.push(row);
+      } else {
+        bySource.set(key, [row]);
+      }
+    }
+
+    const sourceKeys = Array.from(bySource.keys()).sort();
+    const picked: LocationRecord[] = [];
+    let cursor = 0;
+
+    while (picked.length < mapLimit && sourceKeys.length > 0) {
+      const key = sourceKeys[cursor % sourceKeys.length];
+      const bucket = bySource.get(key);
+      if (bucket && bucket.length > 0) {
+        picked.push(bucket.shift() as LocationRecord);
+      } else {
+        bySource.delete(key);
+        sourceKeys.splice(cursor % sourceKeys.length, 1);
+        if (sourceKeys.length === 0) {
+          break;
+        }
+        continue;
+      }
+      cursor += 1;
+    }
+
+    return picked;
   }, [data, mapFilter, mapLimit, selectedSources]);
 
   return (
