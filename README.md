@@ -449,7 +449,7 @@ These represent **proven demand areas** where competitors already operate succes
 
 ### Live Analytics & Exploration
 
-This analysis includes a **fully interactive Streamlit dashboard** for real-time exploration:
+This analysis includes a **fully interactive Next.js dashboard** for real-time exploration:
 
 **Dashboard Features**:
 - 🗺️ **Interactive Maps**: Toggle layers, zoom, pan, view precise coordinates
@@ -472,31 +472,27 @@ This analysis includes a **fully interactive Streamlit dashboard** for real-time
 
 ## 🚀 Quick Start Guide
 
-### Option 1: Docker (Recommended)
+### Option 1: Vercel (Recommended)
 
 ```bash
-# Start dashboard
-chmod +x start.sh
-./start.sh
+# Install deps
+npm install
 
-# Access at http://localhost:8501
+# Login and deploy
+vercel
 
-# Stop dashboard
-./stop.sh
+# Production deploy
+vercel --prod
 ```
 
 ### Option 2: Local Development
 
 ```bash
-# Create environment
-python3 -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-
 # Install dependencies
-pip install -r requirements.txt
+npm install
 
 # Run dashboard
-streamlit run app.py
+npm run dev
 ```
 
 ---
@@ -506,8 +502,10 @@ streamlit run app.py
 ```
 atm_locations/
 ├── README.md                      # This presentation document
-├── app.py                         # Interactive dashboard (1,645 lines)
-├── requirements.txt               # Python dependencies
+├── app/                           # Next.js app router pages/layout
+├── components/                    # React dashboard components
+├── lib/                           # Data + analytics modules
+├── package.json                   # Node dependencies and scripts
 │
 ├── charts/                        # Static analysis visualizations
 │   ├── 1_bank_atm_comparison.png
@@ -544,14 +542,7 @@ atm_locations/
 │   ├── deduplicate_br_atms.py    # Data cleaning
 │   └── [scraper scripts]
 │
-├── .streamlit/                    # Dashboard configuration
-│   └── config.toml               # Theme & settings
-│
-├── Dockerfile                     # Container configuration
-├── docker-compose.yml             # Orchestration
-├── start.sh                       # Docker quick start
-├── stop.sh                        # Docker stop
-└── start-local.sh                # Local dev start
+└── tests/                         # Offline smoke tests
 ```
 
 ---
@@ -565,8 +556,9 @@ atm_locations/
 
 ### Visualization
 - **Matplotlib 3.8.2** - Static chart generation
-- **Plotly 5.18.0** - Interactive charts & maps
-- **Streamlit 1.29.0** - Web dashboard framework
+- **Next.js 14** - Web dashboard framework
+- **React 18** - UI layer
+- **TypeScript 5** - Type-safe application code
 
 ### Geospatial Analysis
 - **Haversine Formula** - Geographic distance calculations
@@ -574,8 +566,7 @@ atm_locations/
 - **2D Histograms** - Density heatmaps
 
 ### Deployment
-- **Docker** - Containerization
-- **Docker Compose** - Orchestration
+- **Vercel** - Hosting and deployment
 
 ---
 
@@ -786,9 +777,8 @@ By following a **phased, data-driven approach** that combines:
 - **Insights Report**: `charts/INSIGHTS_REPORT.txt`
 
 ### External Resources
-- [Streamlit Documentation](https://docs.streamlit.io)
-- [Plotly Python](https://plotly.com/python/)
-- [Docker Documentation](https://docs.docker.com)
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Vercel Documentation](https://vercel.com/docs)
 
 ---
 

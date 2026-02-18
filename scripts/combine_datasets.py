@@ -210,7 +210,7 @@ def normalize_oba_branches(rows: List[Dict]) -> List[Dict]:
     normalized = []
     for row in rows:
         normalized.append({
-            "source": "OBA Bank",
+            "source": "OBA Supermarket",
             "type": "Branch",
             "location_id": row.get("branch_id", ""),
             "name": row.get("name", ""),
